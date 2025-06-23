@@ -15,25 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: '專為舒適而設計',
             title: '豪華客房',
             description: '精心設計的客房，讓您在此放鬆身心，感受杜拜充滿活力的景觀。',
-            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
+            imageSrc: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop',
         },
         {
             subtitle: '精緻工藝打造',
             title: '精選套房',
             description: '高雅的聖殿，俯瞰杜拜的天際線，同時享受寧靜的海景。',
-            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
+            imageSrc: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop',
         },
         {
             subtitle: '時尚航海生活',
             title: '私人住宅',
             description: '提供一房、兩房和三房的住宅選擇，配備最頂級的設施，環繞在鬱鬱蔥蔥的景觀之中。',
-            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
+            imageSrc: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop',
         },
         {
             subtitle: '環球美食之旅',
             title: '餐飲體驗',
             description: '酒店內設有11間餐廳和4間酒吧，從異國情調的亞洲風味到永恆的地中海經典，一場全球美食之旅正等著您。',
-            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
+            imageSrc: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop',
         },
         
     ];
@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cloneCount = locations.length;
     const extendedLocations = [...locations, ...locations, ...locations];
     let currentIndex = cloneCount; // Start at the first "real" item
-    let isTransitioning = false; // Prevents spam clicking
 
     function createCards() {
         carousel.innerHTML = '';
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cardEl.className = 'card';
             
             cardEl.innerHTML = `
-                <iframe src="${loc.iframeSrc}" frameborder="0" scrolling="no" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <img src="${loc.imageSrc}" alt="${loc.title}" />
                 <div class="overlay"></div>
                 <div class="card-content">
                     <span class="subtitle">${loc.subtitle}</span>
@@ -81,47 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function runTransition(index) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        
         const cardData = extendedLocations[index];
-        const sourceCardEl = carousel.children[currentIndex];
-        const rect = sourceCardEl.getBoundingClientRect();
         
-        document.body.classList.add('is-animating');
-
-        const transitionContainer = document.createElement('div');
-        transitionContainer.id = 'transition-container';
-        document.body.appendChild(transitionContainer);
-
-        const clone = document.createElement('div');
-        clone.className = 'transition-clone';
-        clone.style.top = `${rect.top}px`;
-        clone.style.left = `${rect.left}px`;
-        clone.style.width = `${rect.width}px`;
-        clone.style.height = `${rect.height}px`;
+        // 直接切換背景圖片
+        document.body.style.backgroundImage = `url('${cardData.imageSrc}')`;
         
-        const iframe = document.createElement('iframe');
-        iframe.src = cardData.iframeSrc;
-        iframe.setAttribute('scrolling', 'no');
-        clone.appendChild(iframe);
-        transitionContainer.appendChild(clone);
-
         setActive(index);
-
-        requestAnimationFrame(() => {
-            clone.style.top = '0px';
-            clone.style.left = '0px';
-            clone.style.width = '100vw';
-            clone.style.height = '100vh';
-            clone.style.borderRadius = '0px';
-        });
-
-        clone.addEventListener('transitionend', () => {
-            document.body.classList.remove('is-animating');
-            transitionContainer.remove();
-            isTransitioning = false;
-        }, { once: true });
     }
 
     function setActive(index) {
@@ -129,13 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const realIndex = currentIndex % locations.length;
         const cardData = locations[realIndex];
         
-        infoPanel.container.style.opacity = 0;
-        setTimeout(() => {
-            infoPanel.subtitle.textContent = cardData.subtitle;
-            infoPanel.title.textContent = cardData.title;
-            infoPanel.description.textContent = cardData.description;
-            infoPanel.container.style.opacity = 1;
-        }, 300);
+        infoPanel.subtitle.textContent = cardData.subtitle;
+        infoPanel.title.textContent = cardData.title;
+        infoPanel.description.textContent = cardData.description;
         
         updateDisplay();
     }

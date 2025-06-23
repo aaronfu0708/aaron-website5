@@ -254,30 +254,20 @@ header {
     border-color: rgba(255, 255, 255, 0.7);
 }
 
-.card iframe {
+.card img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border: none;
-    pointer-events: none;
+    object-fit: cover;
     z-index: 0;
     opacity: 0.7;
     filter: grayscale(50%);
     transition: all 0.4s ease;
-    overflow: hidden !important;
-    scrolling: no;
-    -webkit-overflow-scrolling: none;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
-.card iframe::-webkit-scrollbar {
-    display: none;
-}
-
-.card.active iframe, .card:hover iframe {
+.card.active img, .card:hover img {
     opacity: 1;
     filter: grayscale(0%);
 }
@@ -352,32 +342,6 @@ header {
     height: 100%;
     pointer-events: none;
     z-index: 9999;
-}
-
-.transition-clone {
-    position: absolute;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1);
-    background-color: #222;
-}
-.transition-clone iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    opacity: 1;
-    filter: none;
-    overflow: hidden !important;
-    scrolling: no;
-    -webkit-overflow-scrolling: none;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-body.is-animating .header,
-body.is-animating .main-content {
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
 }
 
 /* Mobile Navigation Overlay */
