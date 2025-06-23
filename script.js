@@ -17,32 +17,27 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: '專為舒適而設計',
             title: '豪華客房',
             description: '精心設計的客房，讓您在此放鬆身心，感受杜拜充滿活力的景觀。',
-            iframeSrc: 'https://www.youtube.com/embed/2TathehYw_I?autoplay=1&mute=1&loop=1&playlist=2TathehYw_I&controls=0&modestbranding=1&showinfo=0&rel=0',
+            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
         },
         {
             subtitle: '精緻工藝打造',
             title: '精選套房',
             description: '高雅的聖殿，俯瞰杜拜的天際線，同時享受寧靜的海景。',
-            iframeSrc: 'https://www.youtube.com/embed/ScX_d_nL4yI?autoplay=1&mute=1&loop=1&playlist=ScX_d_nL4yI&controls=0&modestbranding=1&showinfo=0&rel=0',
+            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
         },
         {
             subtitle: '時尚航海生活',
             title: '私人住宅',
             description: '提供一房、兩房和三房的住宅選擇，配備最頂級的設施，環繞在鬱鬱蔥蔥的景觀之中。',
-            iframeSrc: 'https://www.youtube.com/embed/0tUARbSgWcQ?autoplay=1&mute=1&loop=1&playlist=0tUARbSgWcQ&controls=0&modestbranding=1&showinfo=0&rel=0',
+            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
         },
         {
             subtitle: '環球美食之旅',
             title: '餐飲體驗',
             description: '酒店內設有11間餐廳和4間酒吧，從異國情調的亞洲風味到永恆的地中海經典，一場全球美食之旅正等著您。',
-            iframeSrc: 'https://www.youtube.com/embed/Zf_wFjYtA7s?autoplay=1&mute=1&loop=1&playlist=Zf_wFjYtA7s&controls=0&modestbranding=1&showinfo=0&rel=0',
+            iframeSrc: 'https://aaronfu0708.github.io/aaron-website5/',
         },
-        {
-            subtitle: '泰麗絲水療中心',
-            title: '身心康健',
-            description: '在我們的泰麗絲(Talise)水療中心，透過全方位的水療方案，讓您進入幸福放鬆的狀態，每一次的互動都充滿了可能性與目標感。',
-            iframeSrc: 'https://www.youtube.com/embed/p4k2g5yC21M?autoplay=1&mute=1&loop=1&playlist=p4k2g5yC21M&controls=0&modestbranding=1&showinfo=0&rel=0',
-        },
+        
     ];
 
     const cardWidth = 220;
@@ -68,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cardEl.className = 'card';
             
             cardEl.innerHTML = `
-                <iframe src="${loc.iframeSrc}" frameborder="0" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="${loc.iframeSrc}" frameborder="0" scrolling="no" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="overlay"></div>
                 <div class="card-content">
                     <span class="subtitle">${loc.subtitle}</span>
@@ -109,7 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
         clone.style.height = `${rect.height}px`;
         
         const iframe = document.createElement('iframe');
-        iframe.src = cardData.iframeSrc.replace('&mute=1', '&mute=0');
+        iframe.src = cardData.iframeSrc;
+        iframe.setAttribute('scrolling', 'no');
         clone.appendChild(iframe);
         transitionContainer.appendChild(clone);
 
