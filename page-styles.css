@@ -1183,13 +1183,6 @@ body {
         gap: 30px;
     }
     
-    .bookings-list {
-        width: 90vw;
-        max-width: 90vw;
-        padding-left: 16px;
-        padding-right: 16px;
-        margin: 0 auto;
-    }
     
     .list-header {
         flex-direction: column;
@@ -1213,9 +1206,7 @@ body {
         font-size: 0.8rem;
     }
     
-    .booking-card {
-        padding: 20px;
-    }
+   
     
     .card-header {
         flex-direction: column;

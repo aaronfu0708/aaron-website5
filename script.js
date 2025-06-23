@@ -230,9 +230,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function handleDragStart(e) {
-            isDragging = true;
+        isDragging = true;
             navigationGrid.classList.add('is-dragging');
-            startX = e.pageX || e.touches[0].pageX;
+        startX = e.pageX || e.touches[0].pageX;
             const currentTransform = new WebKitCSSMatrix(window.getComputedStyle(navigationGrid).transform);
             scrollLeft = -currentTransform.m41;
             dragMovement = 0;
@@ -240,8 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function handleDragMove(e) {
-            if (!isDragging) return;
-            e.preventDefault();
+        if (!isDragging) return;
+        e.preventDefault();
             const x = e.pageX || (e.touches && e.touches[0].pageX);
             const walk = (x - startX);
             navigationGrid.style.transition = 'none'; // 拖曳時移除動畫
@@ -250,8 +250,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function handleDragEnd() {
-            if (!isDragging) return;
-            isDragging = false;
+        if (!isDragging) return;
+        isDragging = false;
             navigationGrid.classList.remove('is-dragging');
             
             const cardWidth = navCards[0].offsetWidth;
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     goToIndex(currentIndex - 1);
                 }
-            } else {
+        } else {
                 updateCards(); // 回到原位
             }
         }
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navCards.forEach((card, index) => {
             card.addEventListener('click', (e) => {
                 if (Math.abs(dragMovement) > 10) { // 如果是拖曳，則取消點擊
-                    e.preventDefault();
+            e.preventDefault();
                     return;
                 }
                 goToIndex(index);

@@ -632,8 +632,8 @@ header {
 
     .navigation-panel {
         width: 100vw;
-        padding: 15px;
         overflow-x: hidden;
+        margin-left: 40px;
     }
 
     .navigation-grid {
