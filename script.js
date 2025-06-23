@@ -144,70 +144,79 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!navigationGrid) return;
         
         const navCards = document.querySelectorAll('.nav-card');
-    const infoPanel = {
-        subtitle: document.querySelector('#info-panel .subtitle'),
-        title: document.querySelector('#info-panel .title'),
-        description: document.querySelector('#info-panel .description'),
-    };
+        const infoPanel = {
+            subtitle: document.querySelector('#info-panel .subtitle'),
+            title: document.querySelector('#info-panel .title'),
+            description: document.querySelector('#info-panel .description'),
+        };
         
         const navBtnPrev = document.getElementById('nav-btn-prev');
         const navBtnNext = document.getElementById('nav-btn-next');
 
-    const locations = [
-        {
-            subtitle: '專為舒適而設計',
-            title: '豪華客房',
-            description: '精心設計的客房，讓您在此放鬆身心，感受杜拜充滿活力的景觀。',
-        },
-        {
-            subtitle: '精緻工藝打造',
-            title: '精選套房',
-            description: '高雅的聖殿，俯瞰杜拜的天際線，同時享受寧靜的海景。',
-        },
-        {
-            subtitle: '時尚航海生活',
-            title: '私人住宅',
-            description: '提供一房、兩房和三房的住宅選擇，配備最頂級的設施，環繞在鬱鬱蔥蔥的景觀之中。',
-        },
-        {
-            subtitle: '環球美食之旅',
-            title: '餐飲體驗',
-            description: '酒店內設有11間餐廳和4間酒吧，從異國情調的亞洲風味到永恆的地中海經典，一場全球美食之旅正等著您。',
-        },
-    ];
+        const locations = [
+            {
+                subtitle: '杜拜奢華新地標',
+                title: 'Jumeirah',
+                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
+            },
+            {
+                subtitle: '杜拜奢華新地標',
+                title: 'Jumeirah',
+                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
+            },
+            {
+                subtitle: '杜拜奢華新地標',
+                title: 'Jumeirah',
+                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
+            },
+            {
+                subtitle: '杜拜奢華新地標',
+                title: 'Jumeirah',
+                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
+            }
+        ];
 
-    const cardWidth = 220;
-    const cardMargin = 20;
-    const totalCardWidth = cardWidth + cardMargin;
         let currentIndex = 0;
         let isTransitioning = false;
         
+        // --- 拖曳滑動功能變數 ---
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+        let dragMovement = 0;
+
         function updateInfoPanel(index) {
+            if (isTransitioning) return;
             const data = locations[index];
             if (infoPanel.subtitle) infoPanel.subtitle.textContent = data.subtitle;
             if (infoPanel.title) infoPanel.title.textContent = data.title;
             if (infoPanel.description) infoPanel.description.textContent = data.description;
         }
-        
-        function updateCards() {
-            navCards.forEach((card, index) => {
-                card.classList.toggle('active', index === currentIndex);
-            });
-            const scrollPosition = currentIndex * totalCardWidth;
+
+        function updateCards(transition = true) {
+            if (transition) {
+                navigationGrid.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+            } else {
+                navigationGrid.style.transition = 'none';
+            }
+            navCards.forEach((card, index) => card.classList.toggle('active', index === currentIndex));
+            const cardWidth = navCards[0].offsetWidth;
+            const cardMargin = 20; // from CSS gap
+            const scrollPosition = currentIndex * (cardWidth + cardMargin);
             navigationGrid.style.transform = `translateX(-${scrollPosition}px)`;
         }
-        
-        function goToIndex(targetIndex) {
-            if (isTransitioning) return;
+
+        function goToIndex(targetIndex, force = false) {
+            if (isTransitioning && !force) return;
             
             let newIndex = targetIndex;
-            if (targetIndex < 0) {
-                newIndex = locations.length - 1;
-            } else if (targetIndex >= locations.length) {
+            if (newIndex < 0) {
                 newIndex = 0;
+            } else if (newIndex >= locations.length) {
+                newIndex = locations.length - 1;
             }
             
-            if (newIndex === currentIndex) return;
+            if (newIndex === currentIndex && !force) return;
             
             isTransitioning = true;
             currentIndex = newIndex;
@@ -217,34 +226,82 @@ document.addEventListener('DOMContentLoaded', function() {
             
             setTimeout(() => {
                 isTransitioning = false;
-            }, 600);
+            }, 500);
+        }
+
+        function handleDragStart(e) {
+            isDragging = true;
+            navigationGrid.classList.add('is-dragging');
+            startX = e.pageX || e.touches[0].pageX;
+            const currentTransform = new WebKitCSSMatrix(window.getComputedStyle(navigationGrid).transform);
+            scrollLeft = -currentTransform.m41;
+            dragMovement = 0;
+            navigationGrid.style.transition = 'none'; // 拖曳時移除動畫
+        }
+
+        function handleDragMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX || (e.touches && e.touches[0].pageX);
+            const walk = (x - startX);
+            navigationGrid.style.transition = 'none'; // 拖曳時移除動畫
+            navigationGrid.style.transform = `translateX(${-scrollLeft + walk}px)`;
+            dragMovement = walk;
+        }
+
+        function handleDragEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            navigationGrid.classList.remove('is-dragging');
+            
+            const cardWidth = navCards[0].offsetWidth;
+            const cardMargin = 20;
+            const totalCardWidth = cardWidth + cardMargin;
+            
+            // 根據拖曳距離決定是否切換卡片
+            if (Math.abs(dragMovement) > 50) { // 拖曳超過50px才觸發
+                if (dragMovement < 0) {
+                    goToIndex(currentIndex + 1);
+                } else {
+                    goToIndex(currentIndex - 1);
+                }
+            } else {
+                updateCards(); // 回到原位
+            }
         }
         
+        // 綁定拖曳事件（含 passive: false）
+        navigationGrid.addEventListener('mousedown', handleDragStart);
+        navigationGrid.addEventListener('mousemove', handleDragMove);
+        navigationGrid.addEventListener('mouseup', handleDragEnd);
+        navigationGrid.addEventListener('mouseleave', handleDragEnd);
+
+        navigationGrid.addEventListener('touchstart', handleDragStart, { passive: false });
+        navigationGrid.addEventListener('touchmove', handleDragMove, { passive: false });
+        navigationGrid.addEventListener('touchend', handleDragEnd);
+
         // 卡片點擊事件
         navCards.forEach((card, index) => {
             card.addEventListener('click', (e) => {
-                e.preventDefault();
+                if (Math.abs(dragMovement) > 10) { // 如果是拖曳，則取消點擊
+                    e.preventDefault();
+                    return;
+                }
                 goToIndex(index);
             });
         });
         
         // 導航按鈕事件
         if (navBtnPrev) {
-            navBtnPrev.addEventListener('click', () => {
-                goToIndex(currentIndex - 1);
-            });
+            navBtnPrev.addEventListener('click', () => goToIndex(currentIndex - 1));
         }
-        
         if (navBtnNext) {
-            navBtnNext.addEventListener('click', () => {
-                goToIndex(currentIndex + 1);
-            });
+            navBtnNext.addEventListener('click', () => goToIndex(currentIndex + 1));
         }
         
         // 初始化
         updateInfoPanel(currentIndex);
         updateCards();
-        navigationGrid.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
     }
     
     // 初始化所有功能
