@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const siteWrapper = document.getElementById('site-wrapper');
     const carousel = document.getElementById('carousel');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
     const progressBar = document.getElementById('progress-bar');
     const counterEl = document.getElementById('counter');
     const infoPanel = {
@@ -168,12 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    function slide(direction) {
-        if (isTransitioning) return;
-        const nextIndex = currentIndex + (direction === 'next' ? 1 : -1);
-        runTransition(nextIndex);
-    }
-
     // --- Drag/Swipe to Scroll ---
     let isDragging = false;
     let startX;
@@ -222,7 +214,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let newIndex = currentIndex + cardSwiped;
 
         if (Math.abs((e.pageX || e.changedTouches[0].pageX) - startX) > dragThreshold) {
-            runTransition(newIndex);
+            // Only update the display, don't run transition
+            setActive(newIndex);
         } else {
             // Not dragged far enough, snap back
             updateDisplay();
@@ -245,11 +238,10 @@ document.addEventListener('DOMContentLoaded', () => {
     carousel.addEventListener('click', (e) => {
         if(hasDragged) {
             e.stopPropagation();
+            e.preventDefault();
+            return false;
         }
     }, true); // Use capture phase to stop event early
-
-    nextBtn.addEventListener('click', () => slide('next'));
-    prevBtn.addEventListener('click', () => slide('prev'));
 
     createCards();
     carousel.style.transition = 'none';
