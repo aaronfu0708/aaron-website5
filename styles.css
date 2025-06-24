@@ -33,8 +33,9 @@ body {
 
 @media (max-width: 768px) {
     body {
-        background: url('mbg.webp') no-repeat center center fixed;
+        background: url('bg.webp') no-repeat center center fixed;
         background-size: cover;
+        background-position: 60% 30%; /* 第一個值是左右位置(60%)，第二個值是上下位置(30%) */
         background-color: #000;
     }
     .homepage-parallax-bg {
