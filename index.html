@@ -76,7 +76,7 @@
                     <i class="fas fa-chevron-right"></i>
                 </button>
                 <div class="navigation-grid">
-                    <a href="accommodation.html" class="nav-card">
+                    <a href="accommodation.html" class="nav-card" onclick="console.log('测试点击1')">
                         <img src="room/room23.webp" alt="海景豪華客房" />
                         <div class="nav-overlay"></div>
                         <div class="nav-content">
@@ -85,7 +85,7 @@
                         </div>
                     </a>
                     
-                    <a href="accommodation.html" class="nav-card">
+                    <a href="accommodation.html" class="nav-card" onclick="console.log('测试点击2')">
                         <img src="room/room24.webp" alt="海景露台客房" />
                         <div class="nav-overlay"></div>
                         <div class="nav-content">
@@ -94,7 +94,7 @@
                         </div>
                     </a>
                     
-                    <a href="accommodation.html" class="nav-card">
+                    <a href="accommodation.html" class="nav-card" onclick="console.log('测试点击3')">
                         <img src="room/room25.webp" alt="海景家庭房" />
                         <div class="nav-overlay"></div>
                         <div class="nav-content">
@@ -103,7 +103,7 @@
                         </div>
                     </a>
                     
-                    <a href="accommodation.html" class="nav-card">
+                    <a href="accommodation.html" class="nav-card" onclick="console.log('测试点击4')">
                         <img src="room/room26.webp" alt="海景豪華套房" />
                         <div class="nav-overlay"></div>
                         <div class="nav-content">
@@ -112,7 +112,7 @@
                         </div>
                     </a>
                     
-                    <a href="accommodation.html" class="nav-card">
+                    <a href="accommodation.html" class="nav-card" onclick="console.log('测试点击5')">
                         <img src="room/room27.webp" alt="海景露台套房" />
                         <div class="nav-overlay"></div>
                         <div class="nav-content">
@@ -121,7 +121,7 @@
                         </div>
                     </a>
                     
-                    <a href="accommodation.html" class="nav-card">
+                    <a href="accommodation.html" class="nav-card" onclick="console.log('测试点击6')">
                         <img src="room/room28.webp" alt="海景家庭套房" />
                         <div class="nav-overlay"></div>
                         <div class="nav-content">
@@ -130,7 +130,7 @@
                         </div>
                     </a>
                     
-                    <a href="accommodation.html" class="nav-card">
+                    <a href="accommodation.html" class="nav-card" onclick="console.log('测试点击7')">
                         <img src="room/room29.webp" alt="總統套房" />
                         <div class="nav-overlay"></div>
                         <div class="nav-content">
@@ -145,8 +145,15 @@
             <div class="booking-search-bar booking-search-floating">
               <select>
                 <option>房型</option>
-                <option>豪華客房</option>
-                <option>精選套房</option>
+                <option>海景豪華客房</option>
+                <option>海景露台客房</option>
+                <option>海景家庭房</option>
+                <option>海景豪華套房</option>
+                <option>海景露台套房</option>
+                <option>海景家庭套房</option>
+                <option>濱海豪華客房</option>
+                <option>濱海步道豪華客房</option>
+                <option>濱海露台客房</option>
                 <option>總統套房</option>
               </select>
               <select id="adults" name="adults">
@@ -176,7 +183,7 @@
               </select>
               <input type="date" id="checkin-date" name="checkin-date" min="" placeholder="入住日期">
               <input type="date" id="checkout-date" name="checkout-date" min="" placeholder="退房日期">
-              <button class="booking-search-btn">Search</button>
+              <button class="booking-search-btn">預定</button>
             </div>
             <!-- 訂房搜尋/篩選區塊 end -->
 
@@ -185,48 +192,48 @@
 
     <!-- Masonry 瀑布流圖片動畫區塊 start -->
     <section class="masonry-gallery">
-      <div class="masonry-card">
+      <a href="accommodation.html" class="masonry-card">
         <img src="room/room11.webp" alt="濱海豪華客房">
         <div class="masonry-info">
           <h3>濱海豪華客房</h3>
           <p>享受私人露台，俯瞰壯麗的濱海景致</p>
         </div>
-      </div>
-      <div class="masonry-card">
+      </a>
+      <a href="accommodation.html" class="masonry-card">
         <img src="room/room2.webp" alt="濱海步道豪華客房">
         <div class="masonry-info">
           <h3>濱海步道豪華客房</h3>
           <p>充滿自然光的現代空間，擁有壯觀的景觀</p>
         </div>
-      </div>
-      <div class="masonry-card">
+      </a>
+      <a href="accommodation.html" class="masonry-card">
         <img src="room/room8.webp" alt="濱海露台客房">
         <div class="masonry-info">
           <h3>濱海露台客房</h3>
           <p>金色調與柔和設計，享受壯麗的濱海全景</p>
         </div>
-      </div>
-      <div class="masonry-card">
+      </a>
+      <a href="accommodation.html" class="masonry-card">
         <img src="room/room4.webp" alt="海景豪華客房">
         <div class="masonry-info">
           <h3>海景豪華客房</h3>
           <p>開放式浴室設計，享受地標性海景</p>
         </div>
-      </div>
-      <div class="masonry-card">
+      </a>
+      <a href="accommodation.html" class="masonry-card">
         <img src="room/room10.webp" alt="海景露台客房">
         <div class="masonry-info">
           <h3>海景露台客房</h3>
           <p>專屬露台，欣賞杜拜地標性海景日落</p>
         </div>
-      </div>
-      <div class="masonry-card">
+      </a>
+      <a href="accommodation.html" class="masonry-card">
         <img src="room/room6.webp" alt="海景家庭房">
         <div class="masonry-info">
           <h3>海景家庭房</h3>
           <p>為家庭設計與額外舒適設施</p>
         </div>
-      </div>
+      </a>
     </section>
     <!-- Masonry 瀑布流圖片動畫區塊 end -->
 
@@ -235,6 +242,52 @@
         <div class="slow-reveal-bg" id="slow-reveal-bg"></div>
     </section>
     <!-- 緩慢顯示背景圖片區塊 end -->
+
+    <!-- Footer 區塊 start -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Jumeirah Marsa Al Arab</h3>
+                <p>坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>服務</h4>
+                <ul>
+                    <li><a href="dining.html">餐飲體驗</a></li>
+                    <li><a href="offers.html">獨家優惠</a></li>
+                    <li><a href="about.html">關於我們</a></li>
+                    <li><a href="bookings.html">線上預訂</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>住宿</h4>
+                <ul>
+                    <li><a href="accommodation.html">海景豪華客房</a></li>
+                    <li><a href="accommodation.html">海景露台客房</a></li>
+                    <li><a href="accommodation.html">海景豪華套房</a></li>
+                    <li><a href="accommodation.html">總統套房</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>聯絡</h4>
+                <ul>
+                    <li>0905-827361</li>
+                    <li>chengfu0624@gmail.com</li>
+                    <li>杜拜黃金半島</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Aaron</p>
+        </div>
+    </footer>
+    <!-- Footer 區塊 end -->
 
     <script src="script.js"></script>
 </body>

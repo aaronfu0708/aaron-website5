@@ -250,59 +250,83 @@ let gap = 20; // 卡片間距
 let visibleCards = 0;
 
 function bindCarouselEvents() {
+    console.log('开始绑定轮播图事件');
+    
     // 按鈕事件
     if (prevBtn) {
         prevBtn.addEventListener('click', () => { if (!isDragging) goToPrevious(); });
+        console.log('上一张按钮事件已绑定');
     }
     if (nextBtn) {
         nextBtn.addEventListener('click', () => { if (!isDragging) goToNext(); });
+        console.log('下一张按钮事件已绑定');
     }
 
     // 觸控事件（手機）
-    let touchStartX = 0, touchEndX = 0;
+    let touchStartX = 0;
+    let isTouching = false;
     
     navigationGrid.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
-        isDragging = true;
-        navigationGrid.classList.add('is-dragging');
-    }, { passive: false });
+        isTouching = true;
+        isDragging = false;
+    }, { passive: true });
     
     navigationGrid.addEventListener('touchmove', (e) => {
-        if (isDragging) {
+        if (!isTouching) return;
+        
+        const touchX = e.touches[0].clientX;
+        const diff = touchX - touchStartX;
+        
+        // 如果移动超过10px，开始拖拽
+        if (Math.abs(diff) > 10) {
+            isDragging = true;
             e.preventDefault();
-            const touchX = e.touches[0].clientX;
-            const diff = touchX - touchStartX;
+            
             const translateX = -currentIndex * (cardWidth + gap) + diff;
             navigationGrid.style.transform = `translateX(${translateX}px)`;
         }
     }, { passive: false });
     
     navigationGrid.addEventListener('touchend', (e) => {
+        if (!isTouching) return;
+        
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+        
         if (isDragging) {
-            touchEndX = e.changedTouches[0].clientX;
-            const diff = touchStartX - touchEndX;
+            // 如果滑动距离超过卡片宽度的1/3，切换轮播图
             const threshold = cardWidth / 3;
             if (Math.abs(diff) > threshold) {
-                if (diff > 0) goToNext();
-                else goToPrevious();
+                if (diff > 0) {
+                    goToNext();
+                } else {
+                    goToPrevious();
+                }
             } else {
+                // 回到原位置
                 updateCarouselPosition(currentIndex);
             }
-            isDragging = false;
-            navigationGrid.classList.remove('is-dragging');
         }
+        
+        isTouching = false;
+        isDragging = false;
     });
 
     // 滑鼠事件（桌機）
+    let mouseStartTime = 0;
+    
     navigationGrid.addEventListener('mousedown', (e) => {
         startX = e.clientX;
-        isDragging = true;
+        mouseStartTime = Date.now();
+        isDragging = false;
         navigationGrid.classList.add('is-dragging');
         navigationGrid.style.cursor = 'grabbing';
     });
     
     navigationGrid.addEventListener('mousemove', (e) => {
-        if (isDragging) {
+        if (navigationGrid.classList.contains('is-dragging')) {
+            isDragging = true;
             e.preventDefault();
             currentX = e.clientX;
             const diff = currentX - startX;
@@ -312,7 +336,10 @@ function bindCarouselEvents() {
     });
     
     navigationGrid.addEventListener('mouseup', (e) => {
-        if (isDragging) {
+        const mouseEndTime = Date.now();
+        const mouseDuration = mouseEndTime - mouseStartTime;
+        
+        if (navigationGrid.classList.contains('is-dragging')) {
             const diff = startX - currentX;
             const threshold = cardWidth / 3;
             if (Math.abs(diff) > threshold) {
@@ -328,7 +355,7 @@ function bindCarouselEvents() {
     });
     
     navigationGrid.addEventListener('mouseleave', () => {
-        if (isDragging) {
+        if (navigationGrid.classList.contains('is-dragging')) {
             isDragging = false;
             navigationGrid.classList.remove('is-dragging');
             navigationGrid.style.cursor = 'grab';
@@ -337,14 +364,54 @@ function bindCarouselEvents() {
     });
     
     navigationGrid.style.cursor = 'grab';
+
+    // 移除所有卡片的點擊事件監聽器，讓a標籤的默認行為工作
+    const cards = navigationGrid.querySelectorAll('.nav-card');
+    console.log('找到卡片数量用于事件绑定:', cards.length);
+    
+    cards.forEach(card => {
+        // 移除舊的事件監聽器
+        if (card._carouselClickHandler) {
+            card.removeEventListener('click', card._carouselClickHandler);
+            delete card._carouselClickHandler;
+        }
+        
+        // 直接为每个卡片添加点击事件
+        card.addEventListener('click', function(e) {
+            console.log('卡片被点击:', this.href);
+            if (isDragging) {
+                console.log('拖拽中，阻止点击');
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            console.log('允许跳转到:', this.href);
+            // 允许正常跳转
+            return true;
+        });
+    });
+    
+    console.log('轮播图事件绑定完成');
 }
 
 function initCarousel() {
-    if (!navigationGrid) return;
+    console.log('开始初始化轮播图');
+    if (!navigationGrid) {
+        console.log('navigationGrid 未找到');
+        return;
+    }
+
+    // 确保移除任何可能存在的is-dragging类
+    navigationGrid.classList.remove('is-dragging');
+    isDragging = false;
 
     // 重新取得所有卡片（包括新增的）
     const allCards = navigationGrid.querySelectorAll('.nav-card');
-    if (allCards.length === 0) return;
+    console.log('找到卡片数量:', allCards.length);
+    if (allCards.length === 0) {
+        console.log('没有找到轮播图卡片');
+        return;
+    }
 
     // 1. 先移除所有 clone，只保留原始卡片
     const originalCards = Array.from(allCards);
@@ -355,13 +422,31 @@ function initCarousel() {
     cardWidth = originalCards[0].offsetWidth;
     const containerWidth = navigationGrid.parentElement.offsetWidth;
     visibleCards = Math.floor(containerWidth / (cardWidth + gap));
+    console.log('轮播图参数:', { cardWidth, containerWidth, visibleCards });
     
     // 確保至少複製 2 張卡片
     const cardsToClone = Math.max(visibleCards, 2);
 
-    // 3. 複製卡片
+    // 3. 複製卡片（確保是a標籤且保留href）
     for (let i = 0; i < cardsToClone; i++) {
-        const clone = originalCards[i % originalCards.length].cloneNode(true);
+        const card = originalCards[i % originalCards.length];
+        const clone = card.cloneNode(true);
+        
+        // 確保複製的卡片保持a標籤的完整性
+        if (card.tagName === 'A') {
+            const href = card.getAttribute('href');
+            if (href) {
+                clone.setAttribute('href', href);
+            }
+            // 確保複製的卡片也是a標籤
+            if (clone.tagName !== 'A') {
+                const newLink = document.createElement('a');
+                newLink.setAttribute('href', href);
+                newLink.className = card.className;
+                newLink.innerHTML = card.innerHTML;
+                clone = newLink;
+            }
+        }
         navigationGrid.appendChild(clone);
     }
 
@@ -369,18 +454,9 @@ function initCarousel() {
     currentIndex = 0;
     updateCarouselPosition(currentIndex);
     
-    // 調試信息
-    console.log('輪播初始化:', {
-        originalCards: originalCards.length,
-        visibleCards: visibleCards,
-        cardsToClone: cardsToClone,
-        totalCards: navigationGrid.querySelectorAll('.nav-card').length,
-        cardWidth: cardWidth,
-        gap: gap
-    });
-
     // 5. 重新綁定事件
     bindCarouselEvents();
+    console.log('轮播图初始化完成');
 }
 
 // 前往下一張
