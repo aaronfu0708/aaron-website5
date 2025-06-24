@@ -56,6 +56,8 @@ body:not(.homepage) {
         background-attachment: fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
     }
     body.homepage {
       background: url('bg.jpg') no-repeat center center fixed;
@@ -65,6 +67,8 @@ body:not(.homepage) {
         background-attachment: fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
     }
     .homepage-parallax-bg {
         display: none;
