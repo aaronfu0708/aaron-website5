@@ -54,16 +54,21 @@ body:not(.homepage) {
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
     }
     body.homepage {
       background: url('bg.jpg') no-repeat center center fixed;
       background-size: cover;
-      
-  }
-  .homepage-parallax-bg {
-      display: none;
-  }
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+    }
+    .homepage-parallax-bg {
+        display: none;
+    }
 }
 
 .site-wrapper {
