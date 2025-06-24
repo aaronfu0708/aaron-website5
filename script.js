@@ -1,317 +1,270 @@
-// 等待 DOM 完全加載
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('=== DOM 已加載完成 ===');
-    console.log('當前頁面:', window.location.pathname);
-    
-    // 漢堡選單功能
-    function initMobileNav() {
-        console.log('=== 初始化漢堡選單 ===');
-        
-        const hamburgerBtn = document.getElementById('hamburger-btn');
-        const mobileNav = document.getElementById('mobile-nav');
-        const closeNavBtn = document.getElementById('close-nav-btn');
-        
-        console.log('找到的元素:', {
-            hamburgerBtn: hamburgerBtn,
-            mobileNav: mobileNav,
-            closeNavBtn: closeNavBtn
-        });
-        
-        if (hamburgerBtn && mobileNav && closeNavBtn) {
-            console.log('所有漢堡選單元素都找到了');
-            
-            // 檢查元素是否可見
-            const hamburgerStyle = window.getComputedStyle(hamburgerBtn);
-            console.log('漢堡按鈕樣式:', {
-                display: hamburgerStyle.display,
-                visibility: hamburgerStyle.visibility,
-                opacity: hamburgerStyle.opacity,
-                pointerEvents: hamburgerStyle.pointerEvents,
-                position: hamburgerStyle.position,
-                zIndex: hamburgerStyle.zIndex
-            });
-            
-            // 漢堡按鈕點擊事件
-            hamburgerBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('漢堡按鈕被點擊');
-                mobileNav.classList.add('is-open');
-                console.log('已添加 is-open 類');
-                
-                // 檢查是否真的添加了類
-                setTimeout(() => {
-                    console.log('檢查 is-open 類:', mobileNav.classList.contains('is-open'));
-                }, 100);
-            });
-            
-            // 關閉按鈕點擊事件
-            closeNavBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('關閉按鈕被點擊');
-                mobileNav.classList.remove('is-open');
-                console.log('已移除 is-open 類');
-            });
-            
-            // 點擊遮罩關閉選單
-            mobileNav.addEventListener('click', function(e) {
-                if (e.target === mobileNav) {
-                    console.log('點擊遮罩關閉選單');
-                    mobileNav.classList.remove('is-open');
-                }
-            });
-            
-            // 測試漢堡按鈕是否可點擊
-            console.log('漢堡按鈕樣式:', window.getComputedStyle(hamburgerBtn));
-            console.log('漢堡按鈕位置:', hamburgerBtn.getBoundingClientRect());
-            
-            console.log('漢堡選單事件監聽器已添加');
-        } else {
-            console.error('漢堡選單元素未找到:', {
-                hamburgerBtn: !!hamburgerBtn,
-                mobileNav: !!mobileNav,
-                closeNavBtn: !!closeNavBtn
-            });
-        }
+// 漢堡選單功能腳本
+// 本腳本適用於所有頁面，請確保每頁皆有引入
+
+// 取得漢堡按鈕、行動選單、關閉按鈕、頁面遮罩
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const mobileNav = document.getElementById('mobile-nav');
+const closeNavBtn = document.getElementById('close-nav-btn');
+const overlay = document.querySelector('.overlay');
+
+// 開啟行動選單
+function openMobileNav() {
+    if (mobileNav) mobileNav.classList.add('is-open');
+    if (overlay) overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden'; // 禁止背景滾動
+}
+
+// 關閉行動選單
+function closeMobileNav() {
+    if (mobileNav) mobileNav.classList.remove('is-open');
+    if (overlay) overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+}
+
+// 點擊漢堡按鈕開啟選單
+if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', openMobileNav);
+}
+
+// 點擊關閉按鈕或遮罩關閉選單
+if (closeNavBtn) {
+    closeNavBtn.addEventListener('click', closeMobileNav);
+}
+if (overlay) {
+    overlay.addEventListener('click', closeMobileNav);
+}
+
+// 按下ESC鍵也可關閉選單
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeMobileNav();
     }
-    
-    // 標籤切換功能
-    function initTabs() {
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        if (tabBtns.length > 0 && tabContents.length > 0) {
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const targetTab = this.getAttribute('data-tab');
-                    
-                    // 移除所有活動狀態
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // 添加活動狀態
-                    this.classList.add('active');
-                    const targetContent = document.getElementById(targetTab);
-                    if (targetContent) {
-                        targetContent.classList.add('active');
-                    }
-                });
-            });
-        }
+});
+
+// 輪播功能
+// 取得輪播相關元素
+const navigationGrid = document.querySelector('.navigation-grid');
+const navCards = document.querySelectorAll('.nav-card');
+const prevBtn = document.getElementById('nav-btn-prev');
+const nextBtn = document.getElementById('nav-btn-next');
+
+// 輪播狀態變數
+let currentIndex = 0;
+let isDragging = false;
+let startX = 0;
+let currentX = 0;
+let cardWidth = 0;
+let gap = 20; // 卡片間距
+let visibleCards = 0;
+
+function bindCarouselEvents() {
+    // 按鈕事件
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => { if (!isDragging) goToPrevious(); });
     }
-    
-    // 預訂頁面過濾功能
-    function initBookingFilters() {
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const bookingCards = document.querySelectorAll('.booking-card');
-        
-        if (filterBtns.length > 0 && bookingCards.length > 0) {
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.getAttribute('data-filter');
-                    
-                    // 移除所有按鈕的活動狀態
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    // 添加當前按鈕的活動狀態
-                    this.classList.add('active');
-                    
-                    // 過濾卡片
-                    bookingCards.forEach(card => {
-                        const category = card.getAttribute('data-category');
-                        
-                        if (filter === 'all' || category === filter) {
-                            card.style.display = 'block';
-                            card.style.opacity = '0';
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                            }, 50);
-                        } else {
-                            card.style.opacity = '0';
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 300);
-                        }
-                    });
-                });
-            });
-        }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => { if (!isDragging) goToNext(); });
     }
+
+    // 觸控事件（手機）
+    let touchStartX = 0, touchEndX = 0;
     
-    // 輪播功能（僅首頁）
-    function initCarousel() {
-        const navigationGrid = document.querySelector('.navigation-grid');
-        if (!navigationGrid) return;
-        
-        const navCards = document.querySelectorAll('.nav-card');
-        const infoPanel = {
-            subtitle: document.querySelector('#info-panel .subtitle'),
-            title: document.querySelector('#info-panel .title'),
-            description: document.querySelector('#info-panel .description'),
-        };
-        
-        const navBtnPrev = document.getElementById('nav-btn-prev');
-        const navBtnNext = document.getElementById('nav-btn-next');
-
-        const locations = [
-            {
-                subtitle: '杜拜奢華新地標',
-                title: 'Jumeirah',
-                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
-            },
-            {
-                subtitle: '杜拜奢華新地標',
-                title: 'Jumeirah',
-                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
-            },
-            {
-                subtitle: '杜拜奢華新地標',
-                title: 'Jumeirah',
-                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
-            },
-            {
-                subtitle: '杜拜奢華新地標',
-                title: 'Jumeirah',
-                description: '坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。'
-            }
-        ];
-
-        let currentIndex = 0;
-        let isTransitioning = false;
-        
-        // --- 拖曳滑動功能變數 ---
-        let isDragging = false;
-        let startX;
-        let scrollLeft;
-        let dragMovement = 0;
-
-        function updateInfoPanel(index) {
-            if (isTransitioning) return;
-            const data = locations[index];
-            if (infoPanel.subtitle) infoPanel.subtitle.textContent = data.subtitle;
-            if (infoPanel.title) infoPanel.title.textContent = data.title;
-            if (infoPanel.description) infoPanel.description.textContent = data.description;
-        }
-
-        function updateCards(transition = true) {
-            if (transition) {
-                navigationGrid.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
-            } else {
-                navigationGrid.style.transition = 'none';
-            }
-            navCards.forEach((card, index) => card.classList.toggle('active', index === currentIndex));
-            const cardWidth = navCards[0].offsetWidth;
-            const cardMargin = 20; // from CSS gap
-            const scrollPosition = currentIndex * (cardWidth + cardMargin);
-            navigationGrid.style.transform = `translateX(-${scrollPosition}px)`;
-        }
-
-        function goToIndex(targetIndex, force = false) {
-            if (isTransitioning && !force) return;
-            
-            let newIndex = targetIndex;
-            if (newIndex < 0) {
-                newIndex = 0;
-            } else if (newIndex >= locations.length) {
-                newIndex = locations.length - 1;
-            }
-            
-            if (newIndex === currentIndex && !force) return;
-            
-            isTransitioning = true;
-            currentIndex = newIndex;
-            
-            updateInfoPanel(currentIndex);
-            updateCards();
-            
-            setTimeout(() => {
-                isTransitioning = false;
-            }, 500);
-        }
-
-        function handleDragStart(e) {
+    navigationGrid.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
         isDragging = true;
-            navigationGrid.classList.add('is-dragging');
-        startX = e.pageX || e.touches[0].pageX;
-            const currentTransform = new WebKitCSSMatrix(window.getComputedStyle(navigationGrid).transform);
-            scrollLeft = -currentTransform.m41;
-            dragMovement = 0;
-            navigationGrid.style.transition = 'none'; // 拖曳時移除動畫
-        }
-
-        function handleDragMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-            const x = e.pageX || (e.touches && e.touches[0].pageX);
-            const walk = (x - startX);
-            navigationGrid.style.transition = 'none'; // 拖曳時移除動畫
-            navigationGrid.style.transform = `translateX(${-scrollLeft + walk}px)`;
-            dragMovement = walk;
-        }
-
-        function handleDragEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-            navigationGrid.classList.remove('is-dragging');
-            
-            const cardWidth = navCards[0].offsetWidth;
-            const cardMargin = 20;
-            const totalCardWidth = cardWidth + cardMargin;
-            
-            // 根據拖曳距離決定是否切換卡片
-            if (Math.abs(dragMovement) > 50) { // 拖曳超過50px才觸發
-                if (dragMovement < 0) {
-                    goToIndex(currentIndex + 1);
-                } else {
-                    goToIndex(currentIndex - 1);
-                }
-        } else {
-                updateCards(); // 回到原位
-            }
-        }
-        
-        // 綁定拖曳事件（含 passive: false）
-        navigationGrid.addEventListener('mousedown', handleDragStart);
-        navigationGrid.addEventListener('mousemove', handleDragMove);
-        navigationGrid.addEventListener('mouseup', handleDragEnd);
-        navigationGrid.addEventListener('mouseleave', handleDragEnd);
-
-        navigationGrid.addEventListener('touchstart', handleDragStart, { passive: false });
-        navigationGrid.addEventListener('touchmove', handleDragMove, { passive: false });
-        navigationGrid.addEventListener('touchend', handleDragEnd);
-
-        // 卡片點擊事件
-        navCards.forEach((card, index) => {
-            card.addEventListener('click', (e) => {
-                if (Math.abs(dragMovement) > 10) { // 如果是拖曳，則取消點擊
-            e.preventDefault();
-                    return;
-                }
-                goToIndex(index);
-            });
-        });
-        
-        // 導航按鈕事件
-        if (navBtnPrev) {
-            navBtnPrev.addEventListener('click', () => goToIndex(currentIndex - 1));
-        }
-        if (navBtnNext) {
-            navBtnNext.addEventListener('click', () => goToIndex(currentIndex + 1));
-        }
-        
-        // 初始化
-        updateInfoPanel(currentIndex);
-        updateCards();
-    }
+        navigationGrid.classList.add('is-dragging');
+    }, { passive: false });
     
-    // 初始化所有功能
-    try {
-        initMobileNav();
-        initTabs();
-        initBookingFilters();
-        initCarousel();
-        console.log('=== 所有功能初始化完成 ===');
-    } catch (error) {
-        console.error('初始化過程中發生錯誤:', error);
+    navigationGrid.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            e.preventDefault();
+            const touchX = e.touches[0].clientX;
+            const diff = touchX - touchStartX;
+            const translateX = -currentIndex * (cardWidth + gap) + diff;
+            navigationGrid.style.transform = `translateX(${translateX}px)`;
+        }
+    }, { passive: false });
+    
+    navigationGrid.addEventListener('touchend', (e) => {
+        if (isDragging) {
+            touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            const threshold = cardWidth / 3;
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) goToNext();
+                else goToPrevious();
+            } else {
+                updateCarouselPosition(currentIndex);
+            }
+            isDragging = false;
+            navigationGrid.classList.remove('is-dragging');
+        }
+    });
+
+    // 滑鼠事件（桌機）
+    navigationGrid.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        isDragging = true;
+        navigationGrid.classList.add('is-dragging');
+        navigationGrid.style.cursor = 'grabbing';
+    });
+    
+    navigationGrid.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            e.preventDefault();
+            currentX = e.clientX;
+            const diff = currentX - startX;
+            const translateX = -currentIndex * (cardWidth + gap) + diff;
+            navigationGrid.style.transform = `translateX(${translateX}px)`;
+        }
+    });
+    
+    navigationGrid.addEventListener('mouseup', (e) => {
+        if (isDragging) {
+            const diff = startX - currentX;
+            const threshold = cardWidth / 3;
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) goToNext();
+                else goToPrevious();
+            } else {
+                updateCarouselPosition(currentIndex);
+            }
+            isDragging = false;
+            navigationGrid.classList.remove('is-dragging');
+            navigationGrid.style.cursor = 'grab';
+        }
+    });
+    
+    navigationGrid.addEventListener('mouseleave', () => {
+        if (isDragging) {
+            isDragging = false;
+            navigationGrid.classList.remove('is-dragging');
+            navigationGrid.style.cursor = 'grab';
+            updateCarouselPosition(currentIndex);
+        }
+    });
+    
+    navigationGrid.style.cursor = 'grab';
+}
+
+function initCarousel() {
+    if (!navigationGrid || navCards.length === 0) return;
+
+    // 1. 先移除所有 clone，只保留原始卡片
+    const originalCards = Array.from(navigationGrid.querySelectorAll('.nav-card')).slice(0, navCards.length);
+    navigationGrid.innerHTML = '';
+    originalCards.forEach(card => navigationGrid.appendChild(card));
+
+    // 2. 重新計算
+    cardWidth = originalCards[0].offsetWidth;
+    const containerWidth = navigationGrid.parentElement.offsetWidth;
+    visibleCards = Math.floor(containerWidth / (cardWidth + gap));
+    
+    // 確保至少複製 2 張卡片
+    const cardsToClone = Math.max(visibleCards, 2);
+
+    // 3. 複製卡片
+    for (let i = 0; i < cardsToClone; i++) {
+        const clone = originalCards[i % originalCards.length].cloneNode(true);
+        navigationGrid.appendChild(clone);
     }
-}); 
+
+    // 4. 重新設置 currentIndex
+    currentIndex = 0;
+    updateCarouselPosition(currentIndex);
+    
+    // 調試信息
+    console.log('輪播初始化:', {
+        originalCards: originalCards.length,
+        visibleCards: visibleCards,
+        cardsToClone: cardsToClone,
+        totalCards: navigationGrid.querySelectorAll('.nav-card').length,
+        cardWidth: cardWidth,
+        gap: gap
+    });
+
+    // 5. 重新綁定事件
+    bindCarouselEvents();
+}
+
+// 前往下一張
+function goToNext() {
+    currentIndex++;
+    // 無限循環：到達最後一張時跳回第一張
+    if (currentIndex >= navCards.length) {
+        setTimeout(() => {
+            currentIndex = 0;
+            updateCarouselPosition(currentIndex);
+        }, 300);
+    }
+    updateCarouselPosition(currentIndex);
+}
+
+// 前往上一張
+function goToPrevious() {
+    currentIndex--;
+    // 無限循環：到達第一張前時跳到最後一張
+    if (currentIndex < 0) {
+        setTimeout(() => {
+            currentIndex = navCards.length - 1;
+            updateCarouselPosition(currentIndex);
+        }, 300);
+    }
+    updateCarouselPosition(currentIndex);
+}
+
+// 更新輪播位置
+function updateCarouselPosition(index) {
+    const translateX = -index * (cardWidth + gap);
+    navigationGrid.style.transform = `translateX(${translateX}px)`;
+}
+
+// 頁面載入完成後初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化輪播（僅在首頁）
+    if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+        setTimeout(() => {
+            initCarousel();
+        }, 100);
+    }
+
+    // ===== Masonry 瀑布流圖片動畫區塊 Intersection Observer =====
+    const masonryCards = document.querySelectorAll('.masonry-card');
+    if (masonryCards.length > 0 && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        masonryCards.forEach(card => observer.observe(card));
+    } else if (masonryCards.length > 0) {
+        // Fallback: 直接顯示
+        masonryCards.forEach(card => card.classList.add('visible'));
+    }
+});
+
+// resize 時重新初始化
+window.addEventListener('resize', function() {
+    initCarousel();
+});
+
+// Masonry 圖片視差效果
+function updateMasonryParallax() {
+  const cards = document.querySelectorAll('.masonry-card img');
+  const wh = window.innerHeight;
+  cards.forEach(img => {
+    const rect = img.getBoundingClientRect();
+    // 視差強度大幅提升（160px 為最大偏移）
+    const parallax = ((rect.top + rect.height/2 - wh/2) / wh) * 80;
+    img.style.transform = `scale(1.15) translateY(${parallax}px)`;
+  });
+}
+window.addEventListener('scroll', updateMasonryParallax);
+window.addEventListener('resize', updateMasonryParallax);
+document.addEventListener('DOMContentLoaded', updateMasonryParallax);
+
+// 調試信息
+console.log('漢堡選單和輪播功能 JS 已載入'); 

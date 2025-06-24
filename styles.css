@@ -8,15 +8,17 @@ body {
     font-family: 'Montserrat', sans-serif;
     background-color: #1a1a1a; /* A fallback dark color */
     color: white;
-    overflow: hidden;
+    overflow-x: hidden;
+    background-image: url('bg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .site-wrapper {
     width: 100%;
-    height: 100vh;
-    background-image: url('bg.webp');
-    background-size: cover;
-    background-position: center;
+    min-height: 100vh;
     position: relative; /* Needed for the overlay */
     display: flex;
     flex-direction: column;
@@ -157,6 +159,7 @@ header {
 }
 
 .main-content {
+    position: relative;
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -255,10 +258,20 @@ header {
     height: 100%;
     gap: 20px;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .navigation-grid.is-dragging {
     cursor: grabbing;
+    transition: none;
+}
+
+.navigation-grid.is-dragging .nav-card {
+    pointer-events: none;
 }
 
 .nav-card {
@@ -631,18 +644,22 @@ header {
     }
 
     .navigation-panel {
-        width: 100vw;
+        width: 100%;
+        margin-left: 0;
         overflow-x: hidden;
-        margin-left: 40px;
+        padding: 0 10px;
+        box-sizing: border-box;
     }
 
     .navigation-grid {
-        padding: 0;
+        left: 0;
+        position: absolute; /* 恢復 absolute 以支援無限循環 */
     }
 
     .nav-card {
         width: 200px; /* Slightly smaller cards */
         height: 260px;
+        flex-shrink: 0;
     }
 
     .nav-btn {
@@ -662,6 +679,15 @@ header {
         opacity: 1 !important;
         filter: none !important;
         transform: none !important;
+    }
+    
+    /* 手機版觸控優化 */
+    .navigation-grid.is-dragging {
+        transition: none !important;
+    }
+    
+    .navigation-grid.is-dragging .nav-card {
+        pointer-events: none !important;
     }
 }
 
@@ -708,4 +734,368 @@ header {
 
 .nav-btn:hover i {
     transform: scale(1.2);
+}
+
+/* ===== 訂房搜尋欄現代感優化樣式 ===== */
+.booking-search-bar {
+  margin: 0 auto;
+  max-width: 1100px;
+  background: transparent;
+  border-radius: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  height: 64px;
+  position: relative;
+}
+
+.booking-search-bar select,
+.booking-search-bar input[type='date'] {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.08rem;
+  padding: 0 24px;
+  height: 64px;
+  min-width: 140px;
+  outline: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+.booking-search-bar input[type='date']::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 0.7;
+}
+.booking-search-bar input[type='date']::placeholder {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.booking-search-bar select {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.08rem;
+  padding: 0 36px 0 24px;
+  height: 64px;
+  min-width: 140px;
+  outline: none;
+  appearance: none;
+  border-radius: 0;
+  position: relative;
+  cursor: pointer;
+  /* 自訂下拉箭頭 */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 18px 18px;
+}
+
+.booking-search-bar select:focus {
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+}
+
+.booking-search-bar select option {
+  color: #222;
+  background: #fff;
+}
+
+/* 移除 Firefox 預設箭頭 */
+.booking-search-bar select:-moz-focusring {
+  color: #fff;
+  text-shadow: 0 0 0 #fff;
+}
+.booking-search-bar select::-ms-expand {
+  display: none;
+}
+
+.booking-search-bar > *:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,0.18);
+}
+
+.booking-search-bar .booking-search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #f9a43f 0%, #f47c2b 100%);
+  color: #fff;
+  border: none;
+  border-radius: 32px;
+  padding: 0 36px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  height: 48px;
+  margin: 0 18px 0 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.booking-search-bar .booking-search-btn:hover {
+  background: linear-gradient(90deg, #f47c2b 0%, #f9a43f 100%);
+}
+
+.booking-search-bar input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+  .booking-search-bar {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .booking-search-bar {
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px 14px 14px 14px;
+    border-radius: 28px;
+    height: auto;
+    box-sizing: border-box;
+  }
+  .booking-search-bar > * {
+    width: 100%;
+    min-width: 0;
+    border-right: none !important;
+    border-bottom: none;
+    margin-bottom: 8px;
+  }
+  .booking-search-bar > *:last-child {
+    margin-bottom: 0;
+  }
+  .booking-search-bar .booking-search-btn {
+    width: 100%;
+    margin: 10px 0 0 0;
+    border-radius: 24px;
+    height: 48px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 0;
+  }
+}
+
+.booking-search-floating {
+  position: absolute;
+  left: 42.5vw;
+  top: 100px;
+  width: calc(100% - 14vw);
+  max-width: 850px;
+  transform: none;
+  z-index: 30;
+  padding: 40px 0;
+}
+
+@media (max-width: 900px) {
+  .booking-search-floating {
+    position: static;
+    transform: none;
+    margin: 32px auto 0 auto;
+    width: 90vw !important;
+    max-width: 90vw !important;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 28px;
+    box-sizing: border-box;
+  }
+  .booking-search-bar {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px 14px 14px 14px;
+    border-radius: 28px;
+    height: auto;
+    box-sizing: border-box;
+  }
+  .booking-search-bar > * {
+    width: 100%;
+    min-width: 0;
+    border-right: none !important;
+    border-bottom: none;
+    margin-bottom: 8px;
+  }
+  .booking-search-bar > *:last-child {
+    margin-bottom: 0;
+  }
+  .booking-search-bar .booking-search-btn {
+    width: 100%;
+    margin: 10px 0 0 0;
+    border-radius: 24px;
+    height: 48px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 0;
+  }
+}
+
+/* ===== 精選圖片動畫區塊 modern-gallery ===== */
+.modern-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 80px auto 100px auto;
+  max-width: 1200px;
+  flex-wrap: wrap;
+}
+.modern-card {
+  position: relative;
+  width: 340px;
+  height: 420px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  background: #222;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(.23,1.02,.32,1);
+}
+.modern-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.modern-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(.23,1.02,.32,1);
+}
+.modern-card .modern-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30,30,30,0.7) 60%, rgba(0,0,0,0.1) 100%);
+  z-index: 1;
+}
+.modern-card .modern-content {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  color: #fff;
+  padding: 32px 28px 24px 28px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.modern-card .modern-content h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.modern-card .modern-content p {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+.modern-card:hover img {
+  transform: scale(1.06);
+}
+.modern-card:hover {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+}
+@media (max-width: 900px) {
+  .modern-gallery {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin: 48px auto 60px auto;
+  }
+  .modern-card {
+    width: 92vw;
+    max-width: 400px;
+    height: 320px;
+  }
+  .modern-card .modern-content {
+    padding: 20px 16px 16px 16px;
+  }
+}
+
+/* ===== 兩欄大圖視差 Masonry 區塊（無進場動畫） ===== */
+.masonry-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 70vw;
+  margin: -150px auto 80px auto;
+  padding: 0;
+}
+.masonry-card {
+  position: relative;
+  background: transparent;
+  border-radius: 20px;
+  box-shadow: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.masonry-card::after {
+  display: none !important;
+}
+.masonry-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.15) translateY(0);
+  transition: transform 0.7s cubic-bezier(.23,1.02,.32,1);
+  will-change: transform;
+  min-height: 380px;
+  max-height: 600px;
+  border-radius: 20px;
+}
+.masonry-card:hover img {
+  transform: scale(1.04);
+}
+.masonry-info {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 32px 20px 20px 20px;
+  color: #fff;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  pointer-events: none;
+  background: none;
+}
+.masonry-info h3, .masonry-info p {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 8px 0;
+}
+.masonry-info h3 {
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.masonry-info p {
+  font-size: 1.01rem;
+  color: #fff;
+  line-height: 1.6;
+  opacity: 0.92;
+}
+.masonry-card:hover .masonry-info {
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+@media (max-width: 900px) {
+  .masonry-gallery {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 100vw;
+    padding: 0 2vw;
+  }
+  .masonry-card img {
+    min-height: 220px;
+    max-height: 340px;
+    border-radius: 20px;
+  }
+  .masonry-info {
+    padding: 20px 10px 14px 10px;
+  }
 }

@@ -8,10 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body{overflow-x: hidden；}
+        body{overflow-x: hidden;}
     </style>
 </head>
 <body>
+    
     <div id="site-wrapper" class="site-wrapper">
         <div class="overlay"></div>
         <header>
@@ -45,7 +46,7 @@
                 <a href="offers.html">獨家優惠</a>
                 <a href="about.html">關於我們</a>
                 <a href="bookings.html" class="footer-link">我的預訂</a>
-                <a href="login.html" class="footer-link"><i class="fas fa-user"></i>&nbsp;登入</a>
+                <a href="login.html" class="footer-link">登入</a>
             </nav>
            
         </div>
@@ -53,9 +54,9 @@
         <main class="main-content">
             <div id="info-panel" class="info-panel">
                 <p class="subtitle">杜拜奢華新地標</p>
-                <h1 class="title">Jumeirah Marsa Al Arab</h1>
+                <h1 class="title">Jumeirah</h1>
                 <p class="description">
-                    坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。每間客房與套房均享有壯麗景致與寬敞露台，讓您盡情沐浴陽光、欣賞城市與海洋的美景。酒店設有頂級餐飲、專屬私人海灘、超級遊艇碼頭及全方位健康設施，是放鬆、聚會與享受無憂時光的理想之選。
+                    坐落於杜拜黃金半島，卓美亞港灣酒店（Jumeirah Marsa Al Arab）結合現代設計與阿拉伯傳統，為賓客打造獨一無二的奢華體驗。
                 </p>
                 <div class="actions">
                     <a href="accommodation.html">
@@ -108,12 +109,77 @@
                         </div>
                     </a>
                 </div>
-                <!-- <div class="progress-indicator">
-                    <div class="progress-dots"></div>
-                </div> -->
             </div>
+
+            <!-- 訂房搜尋/篩選區塊 start -->
+            <div class="booking-search-bar booking-search-floating">
+              <select>
+                <option>房型</option>
+                <option>豪華客房</option>
+                <option>精選套房</option>
+                <option>總統套房</option>
+              </select>
+              <input type="date" placeholder="入住日期">
+              <input type="date" placeholder="退房日期">
+              <select>
+                <option>1位成人</option>
+                <option>2位成人</option>
+                <option>3位成人</option>
+                <option>4位成人</option>
+              </select>
+              <button class="booking-search-btn">Search</button>
+            </div>
+            <!-- 訂房搜尋/篩選區塊 end -->
+
         </main>
     </div>
+
+    <!-- Masonry 瀑布流圖片動畫區塊 start -->
+    <section class="masonry-gallery">
+      <div class="masonry-card">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop" alt="豪華客房">
+        <div class="masonry-info">
+          <h3>豪華客房</h3>
+          <p>專為舒適而設計</p>
+        </div>
+      </div>
+      <div class="masonry-card">
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop" alt="精選套房">
+        <div class="masonry-info">
+          <h3>精選套房</h3>
+          <p>精緻工藝打造</p>
+        </div>
+      </div>
+      <div class="masonry-card">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop" alt="總統套房">
+        <div class="masonry-info">
+          <h3>總統套房</h3>
+          <p>高端品味生活</p>
+        </div>
+      </div>
+      <div class="masonry-card">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop" alt="餐飲體驗">
+        <div class="masonry-info">
+          <h3>餐飲體驗</h3>
+          <p>環球美食之旅</p>
+        </div>
+      </div>
+      <div class="masonry-card">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop" alt="豪華客房">
+        <div class="masonry-info">
+          <h3>豪華客房</h3>
+          <p>專為舒適而設計</p>
+        </div>
+      </div>
+      <div class="masonry-card">
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop" alt="精選套房">
+        <div class="masonry-info">
+          <h3>精選套房</h3>
+          <p>精緻工藝打造</p>
+        </div>
+      </div>
+    </section>
+    <!-- Masonry 瀑布流圖片動畫區塊 end -->
 
     <script src="script.js"></script>
 </body>
