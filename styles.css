@@ -843,6 +843,7 @@ header {
   border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
+  text-align: left; /* 确保文字靠左对齐 */
 }
 
 .booking-search-bar input[type='date']::-webkit-input-placeholder {
@@ -857,18 +858,22 @@ header {
 /* iOS 特定樣式 */
 .booking-search-bar input[type='date']::-webkit-datetime-edit {
   color: #fff;
+  text-align: left; /* 确保日期文字靠左对齐 */
 }
 .booking-search-bar input[type='date']::-webkit-datetime-edit-fields-wrapper {
   color: #fff;
+  text-align: left; /* 确保日期字段靠左对齐 */
 }
 .booking-search-bar input[type='date']::-webkit-datetime-edit-text {
   color: #fff;
   opacity: 0.7;
+  text-align: left; /* 确保日期分隔符靠左对齐 */
 }
 .booking-search-bar input[type='date']::-webkit-datetime-edit-month-field,
 .booking-search-bar input[type='date']::-webkit-datetime-edit-day-field,
 .booking-search-bar input[type='date']::-webkit-datetime-edit-year-field {
   color: #fff;
+  text-align: left; /* 确保年月日字段靠左对齐 */
 }
 .booking-search-bar input[type='date']::-webkit-inner-spin-button,
 .booking-search-bar input[type='date']::-webkit-outer-spin-button {
@@ -994,6 +999,7 @@ header {
     color: #fff;
     -webkit-appearance: none;
     appearance: none;
+    text-align: left; /* 确保文字靠左对齐 */
   }
   
   .booking-search-bar input[type='date']:focus {
@@ -1043,21 +1049,25 @@ header {
   .booking-search-bar input[type='date']::-webkit-datetime-edit {
     color: #fff;
     font-size: 16px;
+    text-align: left; /* 确保日期文字靠左对齐 */
   }
   
   .booking-search-bar input[type='date']::-webkit-datetime-edit-fields-wrapper {
     color: #fff;
+    text-align: left; /* 确保日期字段靠左对齐 */
   }
   
   .booking-search-bar input[type='date']::-webkit-datetime-edit-text {
     color: #fff;
     opacity: 0.7;
+    text-align: left; /* 确保日期分隔符靠左对齐 */
   }
   
   .booking-search-bar input[type='date']::-webkit-datetime-edit-month-field,
   .booking-search-bar input[type='date']::-webkit-datetime-edit-day-field,
   .booking-search-bar input[type='date']::-webkit-datetime-edit-year-field {
     color: #fff;
+    text-align: left; /* 确保年月日字段靠左对齐 */
   }
   
   .booking-search-bar input[type='date']::-webkit-calendar-picker-indicator {
