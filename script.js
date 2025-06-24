@@ -118,6 +118,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 初始化Masonry视差效果
     updateMasonryParallax();
+
+    // 初始化緩慢顯示效果（僅在首頁）
+    if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+        initSlowReveal();
+    }
 });
 
 // 登入頁面標籤頁切換功能
@@ -494,6 +499,54 @@ function initHomepageParallax() {
     // 初始化
     updateParallax();
     console.log('首页视差效果初始化完成');
+}
+
+// 緩慢顯示背景圖片效果
+function initSlowReveal() {
+  const slowRevealBg = document.getElementById('slow-reveal-bg');
+  const slowRevealSection = document.querySelector('.slow-reveal-section');
+  const parallaxBg = document.getElementById('homepage-parallax-bg');
+  
+  if (!slowRevealBg || !slowRevealSection) return;
+  
+  function updateSlowReveal() {
+    const rect = slowRevealSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // 計算滾動進度 (0 到 1)
+    const progress = Math.max(0, Math.min(1, 
+      (windowHeight - rect.top) / (rect.height + windowHeight)
+    ));
+    
+    // 根據進度調整透明度
+    slowRevealBg.style.opacity = progress;
+    
+    // 根據進度調整縮放
+    const scale = 1.1 - (progress * 0.1);
+    slowRevealBg.style.transform = `scale(${scale})`;
+    
+    // 當 2bg 開始顯示時（進度 > 0），立即隱藏原本的視差背景
+    if (progress > 0 && parallaxBg) {
+      parallaxBg.style.opacity = '0';
+      parallaxBg.style.transition = 'opacity 0.3s ease';
+    } else if (progress <= 0 && parallaxBg) {
+      parallaxBg.style.opacity = '1';
+      parallaxBg.style.transition = 'opacity 0.3s ease';
+    }
+    
+    // 當完全滾動到底部時添加 revealed 類
+    if (progress >= 0.95) {
+      slowRevealBg.classList.add('revealed');
+    } else {
+      slowRevealBg.classList.remove('revealed');
+    }
+  }
+  
+  window.addEventListener('scroll', updateSlowReveal);
+  window.addEventListener('resize', updateSlowReveal);
+  
+  // 初始化
+  updateSlowReveal();
 }
 
 // 調試信息
