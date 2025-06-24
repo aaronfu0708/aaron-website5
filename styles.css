@@ -49,26 +49,40 @@ body:not(.homepage) {
 
 @media (max-width: 768px) {
     body:not(.homepage) {
+        background: none; /* 移除 body 背景 */
+    }
+    body:not(.homepage)::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background-image: url('bg.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
+        z-index: -1;
         -webkit-background-size: cover;
         -moz-background-size: cover;
-        transform: translate3d(0, 0, 0);
-        -webkit-transform: translate3d(0, 0, 0);
     }
     body.homepage {
-      background: url('bg.jpg') no-repeat center center fixed;
-      background-size: cover;
+        background: none; /* 移除 body 背景 */
+    }
+    body.homepage::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('bg.jpg');
+        background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
+        z-index: -1;
         -webkit-background-size: cover;
         -moz-background-size: cover;
-        transform: translate3d(0, 0, 0);
-        -webkit-transform: translate3d(0, 0, 0);
     }
     .homepage-parallax-bg {
         display: none;
