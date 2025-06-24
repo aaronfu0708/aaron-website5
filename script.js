@@ -86,10 +86,38 @@ function initGuestSelectors() {
 
 // 頁面載入完成後初始化日期輸入框
 document.addEventListener('DOMContentLoaded', function() {
+    initHomepageParallax(); // 初始化首页视差效果
     initDateInputs();
     initLoginTabs(); // 初始化登入頁面標籤頁
     initGuestSelectors(); // 初始化大人小孩選擇框
     initFilterTabs(); // 初始化過濾標籤功能
+    
+    // 初始化輪播（僅在首頁）
+    if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+        setTimeout(() => {
+            initCarousel();
+        }, 100);
+    }
+
+    // ===== Masonry 瀑布流圖片動畫區塊 Intersection Observer =====
+    const masonryCards = document.querySelectorAll('.masonry-card');
+    if (masonryCards.length > 0 && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        masonryCards.forEach(card => observer.observe(card));
+    } else if (masonryCards.length > 0) {
+        // Fallback: 直接顯示
+        masonryCards.forEach(card => card.classList.add('visible'));
+    }
+    
+    // 初始化Masonry视差效果
+    updateMasonryParallax();
 });
 
 // 登入頁面標籤頁切換功能
@@ -307,10 +335,14 @@ function bindCarouselEvents() {
 }
 
 function initCarousel() {
-    if (!navigationGrid || navCards.length === 0) return;
+    if (!navigationGrid) return;
+
+    // 重新取得所有卡片（包括新增的）
+    const allCards = navigationGrid.querySelectorAll('.nav-card');
+    if (allCards.length === 0) return;
 
     // 1. 先移除所有 clone，只保留原始卡片
-    const originalCards = Array.from(navigationGrid.querySelectorAll('.nav-card')).slice(0, navCards.length);
+    const originalCards = Array.from(allCards);
     navigationGrid.innerHTML = '';
     originalCards.forEach(card => navigationGrid.appendChild(card));
 
@@ -348,9 +380,12 @@ function initCarousel() {
 
 // 前往下一張
 function goToNext() {
+    const allCards = navigationGrid.querySelectorAll('.nav-card');
+    const originalCardCount = allCards.length - Math.floor(allCards.length / (allCards.length / 7)); // 估算原始卡片數量
+    
     currentIndex++;
     // 無限循環：到達最後一張時跳回第一張
-    if (currentIndex >= navCards.length) {
+    if (currentIndex >= 7) { // 使用固定的 7 張卡片
         setTimeout(() => {
             currentIndex = 0;
             updateCarouselPosition(currentIndex);
@@ -365,7 +400,7 @@ function goToPrevious() {
     // 無限循環：到達第一張前時跳到最後一張
     if (currentIndex < 0) {
         setTimeout(() => {
-            currentIndex = navCards.length - 1;
+            currentIndex = 6; // 使用固定的 6 (7-1)
             updateCarouselPosition(currentIndex);
         }, 300);
     }
@@ -377,33 +412,6 @@ function updateCarouselPosition(index) {
     const translateX = -index * (cardWidth + gap);
     navigationGrid.style.transform = `translateX(${translateX}px)`;
 }
-
-// 頁面載入完成後初始化
-document.addEventListener('DOMContentLoaded', function() {
-    // 初始化輪播（僅在首頁）
-    if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
-        setTimeout(() => {
-            initCarousel();
-        }, 100);
-    }
-
-    // ===== Masonry 瀑布流圖片動畫區塊 Intersection Observer =====
-    const masonryCards = document.querySelectorAll('.masonry-card');
-    if (masonryCards.length > 0 && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        masonryCards.forEach(card => observer.observe(card));
-    } else if (masonryCards.length > 0) {
-        // Fallback: 直接顯示
-        masonryCards.forEach(card => card.classList.add('visible'));
-    }
-});
 
 // resize 時重新初始化
 window.addEventListener('resize', function() {
@@ -423,7 +431,70 @@ function updateMasonryParallax() {
 }
 window.addEventListener('scroll', updateMasonryParallax);
 window.addEventListener('resize', updateMasonryParallax);
-document.addEventListener('DOMContentLoaded', updateMasonryParallax);
+
+// 首页视差滚动效果（类似Adaline.ai）
+function initHomepageParallax() {
+    const parallaxBg = document.getElementById('homepage-parallax-bg');
+    const body = document.body;
+    
+    console.log('首页视差效果初始化:', {
+        parallaxBg: !!parallaxBg,
+        isHomepage: body.classList.contains('homepage'),
+        bodyClasses: body.className
+    });
+    
+    // 只在首页执行
+    if (!parallaxBg || !body.classList.contains('homepage')) {
+        console.log('首页视差效果未启用');
+        return;
+    }
+    
+    console.log('首页视差效果已启用');
+    
+    let ticking = false;
+    
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        // 计算滚动进度（0-1）
+        const scrollProgress = Math.min(scrolled / (documentHeight - windowHeight), 1);
+        
+        // 背景图缩放效果：从120%逐渐放大到140%（确保始终覆盖视窗）
+        const scale = 1.2 + (scrollProgress * 0.2); // 从1.2倍放大到1.4倍
+        
+        // 背景位置移动：创造由近到远的效果（向上移动）
+        const moveY = -(scrolled * 0.2); // 减少移动速度，避免露出边界
+        
+        // 应用变换
+        parallaxBg.style.backgroundSize = `${scale * 100}% ${scale * 100}%`;
+        parallaxBg.style.backgroundPosition = `center ${moveY}px`;
+        
+        // 添加轻微的旋转效果增强深度感
+        const rotation = scrollProgress * 0.5; // 进一步减少旋转角度
+        parallaxBg.style.transform = `translateZ(0) rotate(${rotation}deg)`;
+        
+        ticking = false;
+    }
+    
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+    
+    // 监听滚动事件
+    window.addEventListener('scroll', requestTick, { passive: true });
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', requestTick, { passive: true });
+    
+    // 初始化
+    updateParallax();
+    console.log('首页视差效果初始化完成');
+}
 
 // 調試信息
 console.log('漢堡選單和輪播功能 JS 已載入'); 

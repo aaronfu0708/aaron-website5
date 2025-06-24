@@ -9,6 +9,50 @@ body {
     background-color: #1a1a1a; /* A fallback dark color */
     color: white;
     overflow-x: hidden;
+}
+
+/* 桌面版首頁專用視差背景 */
+.homepage-parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('bg.webp');
+    background-size: 200% 200%;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    z-index: -1;
+    transform: translateZ(0);
+    will-change: transform, background-position, background-size;
+    transition: background-position 0.1s ease-out, background-size 0.1s ease-out;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* 手機版首頁專用視差背景 */
+@media (max-width: 768px) {
+    body {
+        background-image: url('bg.jpeg') !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+        background-color: #e6a97a !important;
+    }
+    .homepage-parallax-bg {
+        display: none !important;
+    }
+}
+
+/* 首页内容层 */
+.homepage .site-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* 非首页的背景 */
+body:not(.homepage) {
     background-image: url('bg.webp');
     background-size: cover;
     background-position: center;
@@ -689,6 +733,11 @@ header {
     .navigation-grid.is-dragging .nav-card {
         pointer-events: none !important;
     }
+
+    .homepage-parallax-bg {
+        background-size: 130% 130%; /* 移动端稍微放大一点，确保覆盖 */
+        transition: none; /* 移动端禁用过渡动画提升性能 */
+    }
 }
 
 .nav-btn {
@@ -994,12 +1043,26 @@ header {
 .booking-search-floating {
   position: absolute;
   left: 42.5vw;
-  top: 100px;
+  top: 60px;
   width: calc(100% - 14vw);
   max-width: 850px;
   transform: none;
   z-index: 30;
   padding: 40px 0;
+}
+
+/* 1080 分辨率特殊处理 */
+@media screen and (min-height: 1080px) {
+  .booking-search-floating {
+    top: 100px !important;
+  }
+}
+
+/* 1920x1080 分辨率特殊处理 */
+@media screen and (min-height: 1000px) {
+  .booking-search-floating {
+    top: 100px !important;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1132,7 +1195,7 @@ header {
 .masonry-gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  gap: 60px;
   max-width: 70vw;
   margin: -150px auto 80px auto;
   padding: 0;
@@ -1151,13 +1214,11 @@ header {
 }
 .masonry-card img {
   width: 100%;
-  height: 100%;
+  height: 480px;
   object-fit: cover;
   transform: scale(1.15) translateY(0);
   transition: transform 0.7s cubic-bezier(.23,1.02,.32,1);
   will-change: transform;
-  min-height: 380px;
-  max-height: 600px;
   border-radius: 20px;
 }
 .masonry-card:hover img {
@@ -1202,8 +1263,7 @@ header {
     margin-top: -50px;
   }
   .masonry-card img {
-    min-height: 220px;
-    max-height: 340px;
+    height: 280px;
     border-radius: 20px;
   }
   .masonry-info {
