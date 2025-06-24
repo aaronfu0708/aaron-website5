@@ -1,6 +1,123 @@
 // 漢堡選單功能腳本
 // 本腳本適用於所有頁面，請確保每頁皆有引入
 
+// 日期輸入框初始化（iOS相容性）
+function initDateInputs() {
+    const checkinDate = document.getElementById('checkin-date');
+    const checkoutDate = document.getElementById('checkout-date');
+    
+    if (checkinDate && checkoutDate) {
+        // 設置今天為最小日期
+        const today = new Date().toISOString().split('T')[0];
+        checkinDate.min = today;
+        checkoutDate.min = today;
+        
+        // 設置預設值（今天和明天）
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowStr = tomorrow.toISOString().split('T')[0];
+        
+        checkinDate.value = today;
+        checkoutDate.value = tomorrowStr;
+        
+        // 入住日期變更時，更新退房日期的最小值
+        checkinDate.addEventListener('change', function() {
+            if (this.value) {
+                const selectedDate = new Date(this.value);
+                const nextDay = new Date(selectedDate);
+                nextDay.setDate(selectedDate.getDate() + 1);
+                const nextDayStr = nextDay.toISOString().split('T')[0];
+                
+                checkoutDate.min = nextDayStr;
+                if (checkoutDate.value && checkoutDate.value <= this.value) {
+                    checkoutDate.value = nextDayStr;
+                }
+            }
+        });
+        
+        // iOS 特定處理
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            // 確保在iOS上能正常觸發日期選擇器
+            checkinDate.addEventListener('focus', function() {
+                this.click();
+            });
+            checkoutDate.addEventListener('focus', function() {
+                this.click();
+            });
+        }
+    }
+}
+
+// 初始化大人小孩選擇框
+function initGuestSelectors() {
+    const adultsSelect = document.getElementById('adults');
+    const childrenSelect = document.getElementById('children');
+    
+    if (adultsSelect && childrenSelect) {
+        // 為手機版添加更清楚的選項文字
+        if (window.innerWidth <= 900) {
+            // 更新大人選項文字
+            Array.from(adultsSelect.options).forEach(option => {
+                const value = option.value;
+                option.textContent = `${value}位成人`;
+            });
+            
+            // 更新小孩選項文字
+            Array.from(childrenSelect.options).forEach(option => {
+                const value = option.value;
+                if (value === '0') {
+                    option.textContent = '無小孩';
+                } else {
+                    option.textContent = `${value}位小孩`;
+                }
+            });
+        }
+        
+        // 添加選擇變更事件
+        adultsSelect.addEventListener('change', function() {
+            console.log('選擇成人數量:', this.value);
+        });
+        
+        childrenSelect.addEventListener('change', function() {
+            console.log('選擇小孩數量:', this.value);
+        });
+    }
+}
+
+// 頁面載入完成後初始化日期輸入框
+document.addEventListener('DOMContentLoaded', function() {
+    initDateInputs();
+    initLoginTabs(); // 初始化登入頁面標籤頁
+    initGuestSelectors(); // 初始化大人小孩選擇框
+});
+
+// 登入頁面標籤頁切換功能
+function initLoginTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    if (tabBtns.length === 0) return; // 如果不在登入頁面，直接返回
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetTab = this.getAttribute('data-tab');
+            
+            // 移除所有活動狀態
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // 添加活動狀態到當前選中的標籤頁
+            this.classList.add('active');
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+}
+
 // 取得漢堡按鈕、行動選單、關閉按鈕、頁面遮罩
 const hamburgerBtn = document.getElementById('hamburger-btn');
 const mobileNav = document.getElementById('mobile-nav');

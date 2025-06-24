@@ -897,6 +897,10 @@ body {
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    user-select: none;
 }
 
 .tab-btn.active {
@@ -1296,6 +1300,21 @@ body {
     
     .login-header h1 {
         font-size: 2rem;
+    }
+    
+    /* 手機版標籤頁優化 */
+    .login-tabs {
+        margin-bottom: 20px;
+        padding: 3px;
+    }
+    
+    .tab-btn {
+        padding: 15px 12px;
+        font-size: 1rem;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .form-row {
