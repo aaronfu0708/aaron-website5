@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initDateInputs();
     initLoginTabs(); // 初始化登入頁面標籤頁
     initGuestSelectors(); // 初始化大人小孩選擇框
+    initFilterTabs(); // 初始化過濾標籤功能
 });
 
 // 登入頁面標籤頁切換功能
@@ -114,6 +115,47 @@ function initLoginTabs() {
             if (targetContent) {
                 targetContent.classList.add('active');
             }
+        });
+    });
+}
+
+// 過濾標籤功能
+function initFilterTabs() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const bookingCards = document.querySelectorAll('.booking-card');
+    
+    if (filterBtns.length === 0) return; // 如果不在預訂頁面，直接返回
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // 移除所有按鈕的活動狀態
+            filterBtns.forEach(b => b.classList.remove('active'));
+            
+            // 添加活動狀態到當前選中的按鈕
+            this.classList.add('active');
+            
+            // 過濾預訂卡片
+            bookingCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                
+                if (filter === 'all' || 
+                    (filter === 'current' && (category === 'current' || category === 'upcoming')) ||
+                    category === filter) {
+                    card.style.display = 'block';
+                    // 添加淡入動畫
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.3s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         });
     });
 }
