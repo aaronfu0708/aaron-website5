@@ -66,7 +66,7 @@ function initGuestSelectors() {
             Array.from(childrenSelect.options).forEach(option => {
                 const value = option.value;
                 if (value === '0') {
-                    option.textContent = '無小孩';
+                    option.textContent = '0位小孩';
                 } else {
                     option.textContent = `${value}位小孩`;
                 }
