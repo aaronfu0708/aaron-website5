@@ -31,18 +31,6 @@ body {
 }
 
 
-@media (max-width: 768px) {
-    body {
-        background: url('bg.webp') no-repeat center center fixed;
-        background-size: cover;
-        background-position: 60% 30%; /* 第一個值是左右位置(60%)，第二個值是上下位置(30%) */
-        background-color: #000;
-    }
-    .homepage-parallax-bg {
-        display: none;
-    }
-}
-
 /* 首页内容层 */
 .homepage .site-wrapper {
     position: relative;
@@ -61,11 +49,24 @@ body:not(.homepage) {
 /* 手機版非首頁背景 */
 @media (max-width: 768px) {
     body:not(.homepage) {
-        background-image: url('mbg.webp');
+        background-image: url('bg.webp');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
+        background-position: 60% 30%; /* 第一個值是左右位置(60%)，第二個值是上下位置(30%) */
+    }
+}
+
+@media (max-width: 768px) {
+    body.homepage {
+        background: url('bg.webp') no-repeat center center fixed;
+        background-size: cover;
+        background-position: 60% 30%; /* 第一個值是左右位置(60%)，第二個值是上下位置(30%) */
+       
+    }
+    .homepage-parallax-bg {
+        display: none;
     }
 }
 
