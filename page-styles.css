@@ -8,6 +8,25 @@ body {
     overflow-y: auto !important;
 }
 
+/* 覆蓋首頁的 main-content 樣式，確保其他頁面正常顯示 */
+.bookings-page.main-content,
+.accommodation-page.main-content,
+.dining-page.main-content,
+.offers-page.main-content,
+.about-page.main-content,
+.login-page.main-content {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .page-header {
     text-align: center;
     margin-bottom: 50px;
@@ -29,14 +48,16 @@ body {
 
 /* 住宿頁面樣式 */
 .accommodation-page {
-    padding: 60px 40px;
+    padding: 40px 40px 60px 40px;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .accommodation-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-top: 40px;
 }
@@ -110,14 +131,16 @@ body {
 
 /* 餐飲頁面樣式 */
 .dining-page {
-    padding: 60px 40px;
+    padding: 40px 40px 60px 40px;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .dining-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-top: 40px;
 }
@@ -196,16 +219,21 @@ body {
 
 /* 優惠頁面樣式 */
 .offers-page {
-    padding: 60px 40px;
+    padding: 40px 40px 60px 40px;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .offers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     margin-top: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .offer-card {
@@ -216,6 +244,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease;
     position: relative;
+    min-width: 0;
+    width: 100%;
 }
 
 .offer-card.featured {
@@ -228,10 +258,11 @@ body {
     right: 15px;
     background: #f9c74f;
     color: #111;
-    padding: 5px 15px;
+    padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 700;
+    z-index: 1;
 }
 
 .offer-card:hover {
@@ -296,21 +327,35 @@ body {
 
 /* 關於我們頁面樣式 */
 .about-page {
-    padding: 60px 40px;
+    padding: 40px 40px 60px 40px;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .about-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
     margin-top: 40px;
 }
 
 .about-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    margin-bottom: 80px;
+    gap: 30px;
     align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.about-section:hover {
+    transform: translateY(-5px);
 }
 
 .about-section.reverse {
@@ -323,22 +368,21 @@ body {
 
 .about-section img {
     width: 100%;
-    height: 400px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .section-content h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
     color: #f9c74f;
 }
 
 .section-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
     margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    color: white;
 }
 
 .location-features {
@@ -349,43 +393,43 @@ body {
 .location-features li {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 10px 0;
-    font-size: 1.1rem;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: white;
 }
 
 .location-features i {
     color: #f9c74f;
-    font-size: 1.2rem;
     width: 20px;
 }
 
 .facilities-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 30px;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .facility-item {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 15px;
+    gap: 10px;
+    padding: 10px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    border-radius: 8px;
+    color: white;
 }
 
 .facility-item i {
     color: #f9c74f;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .sustainability-features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .feature {
@@ -393,32 +437,72 @@ body {
     padding: 20px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
+    color: white;
 }
 
 .feature i {
-    color: #f9c74f;
     font-size: 2rem;
-    margin-bottom: 15px;
+    color: #f9c74f;
+    margin-bottom: 10px;
 }
 
 .feature h4 {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: #f9c74f;
+}
+
+.sustainability-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.sustainability-cards .facility-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.sustainability-cards .facility-item i {
+    color: #f9c74f;
+    font-size: 1.2rem;
+}
+
+.sustainability-cards .facility-title {
+    font-weight: bold;
+    color: #f9c74f;
+    margin-bottom: 2px;
+}
+
+.sustainability-cards .facility-desc {
+    font-size: 0.95rem;
+    color: white;
 }
 
 /* 預訂頁面樣式 */
 .bookings-page {
-    padding: 60px 40px;
-    max-width: 1400px;
+    padding: 40px 40px 60px 40px;
+    max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 /* 統計概覽 */
 .booking-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 .stat-card {
@@ -468,6 +552,9 @@ body {
     grid-template-columns: 1fr 350px;
     gap: 40px;
     align-items: start;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* 預訂列表 */
@@ -838,15 +925,15 @@ body {
 
 /* 登入頁面樣式 */
 .login-page {
-    padding: 60px 40px;
+    padding: 40px 40px 60px 40px;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-height: calc(100vh - 80px);
-    display: block; /* 改為block佈局，與其他頁面一致 */
-    padding-top: 60px; /* 減少上邊距，讓登入框往上移動 */
-    flex-direction: column; /* 覆蓋首頁的flex設置 */
-    gap: 0; /* 覆蓋首頁的gap設置 */
-    padding-left: 0; /* 覆蓋首頁的padding-left */
 }
 
 .login-container {
@@ -1111,41 +1198,48 @@ body {
     .dining-page,
     .offers-page,
     .about-page,
-    .bookings-page {
-        padding-left: 0;
-        padding-right: 0;
+    .bookings-page,
+    .login-page {
+        padding: 40px 16px 40px 16px;
+        max-width: 90vw;
+        width: 90vw;
+        margin: 0 auto;
+        box-sizing: border-box;
     }
+    
     .page-header {
-        margin-bottom: 24px;
+        margin-bottom: 30px;
     }
     
     .accommodation-grid,
     .dining-grid,
-    .offers-grid,
-    .about-content,
-    .bookings-list,
-    .page-header,
-    .facilities-grid,
-    .sustainability-features,
-    .bookings-main,
-    .about-section,
-    .member-benefits ul {
-        width: 90vw;
-        max-width: 90vw;
-        padding-left: 16px;
-        padding-right: 16px;
+    .offers-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .offers-grid {
+        max-width: 100%;
         margin-left: auto;
         margin-right: auto;
-        box-sizing: border-box;
     }
     
-    .about-section {
+    .about-content {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 20px;
+        margin-top: 20px;
     }
     
+    .about-section,
     .about-section.reverse {
-        direction: ltr;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .about-section,
+    .about-section.reverse {
+        padding: 20px;
     }
     
     .facilities-grid {
@@ -1157,15 +1251,9 @@ body {
     }
     
     /* 預訂頁面手機版優化 */
-    .bookings-page {
-        padding: 40px 20px;
-        max-width: 100%;
-    }
-    
     .booking-stats {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
-        margin-bottom: 30px;
     }
     
     .stat-card {
@@ -1185,8 +1273,10 @@ body {
     .bookings-main {
         grid-template-columns: 1fr;
         gap: 30px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
     }
-    
     
     .list-header {
         flex-direction: column;
@@ -1209,8 +1299,6 @@ body {
         padding: 10px 8px;
         font-size: 0.8rem;
     }
-    
-   
     
     .card-header {
         flex-direction: column;
@@ -1309,40 +1397,22 @@ body {
     }
     
     .tab-btn {
-        padding: 15px 12px;
-        font-size: 1rem;
-        min-height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        padding: 12px 16px;
+        font-size: 0.9rem;
     }
     
     .form-row {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
     
     .social-buttons {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
     
     .login-benefits ul {
         grid-template-columns: 1fr;
-    }
-    
-    .about-content {
-        width: 90vw;
-        max-width: 90vw;
-        padding-left: 16px;
-        padding-right: 16px;
-        margin-left: auto;
-        margin-right: auto;
-        box-sizing: border-box;
-    }
-    .about-section,
-    .facilities-grid,
-    .sustainability-features {
-        width: 100%;
-        box-sizing: border-box;
     }
 }
 

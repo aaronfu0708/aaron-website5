@@ -46,320 +46,275 @@
             </nav>
         </div>
 
-        <main class="main-content bookings-page">
-            <div class="page-header">
-                <h1>我的預訂</h1>
-                <p>管理您的預訂記錄和未來行程</p>
-            </div>
+    <main class="main-content bookings-page">
+        <div class="bookings-main">
+            <div class="bookings-list">
+                <div class="list-header">
+                    <h2>預訂記錄</h2>
+                    <div class="filter-tabs">
+                        <button class="filter-btn active" data-filter="all">全部</button>
+                        <button class="filter-btn" data-filter="current">當前</button>
+                        <button class="filter-btn" data-filter="upcoming">即將到來</button>
+                        <button class="filter-btn" data-filter="past">歷史</button>
+                    </div>
+                </div>
 
-            <div class="booking-stats">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>2</h3>
-                        <p>當前預訂</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>1</h3>
-                        <p>即將到來</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>5</h3>
-                        <p>歷史記錄</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>1,250</h3>
-                        <p>積分餘額</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bookings-main">
-                <div class="bookings-list">
-                    <div class="list-header">
-                        <h2>預訂記錄</h2>
-                        <div class="filter-tabs">
-                            <button class="filter-btn active" data-filter="all">全部</button>
-                            <button class="filter-btn" data-filter="current">當前</button>
-                            <button class="filter-btn" data-filter="upcoming">即將到來</button>
-                            <button class="filter-btn" data-filter="past">歷史</button>
-                        </div>
-                    </div>
-
-                    <div class="bookings-container">
-                        <div class="booking-card current" data-category="current">
-                            <div class="card-header">
-                                <div class="booking-info">
-                                    <h3>豪華客房 - 海景</h3>
-                                    <span class="booking-number">#JM2024031501</span>
-                                </div>
-                                <div class="booking-status confirmed">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>已確認</span>
-                                </div>
+                <div class="bookings-container">
+                    <div class="booking-card current" data-category="current">
+                        <div class="card-header">
+                            <div class="booking-info">
+                                <h3>豪華客房 - 海景</h3>
+                                <span class="booking-number">#JM2024031501</span>
                             </div>
-                            
-                            <div class="card-body">
-                                <div class="booking-details">
-                                    <div class="detail-item">
-                                        <i class="fas fa-calendar-alt"></i>
-                                        <div class="detail-content">
-                                            <span class="label">入住日期</span>
-                                            <span class="value">2024年3月15日</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-calendar-times"></i>
-                                        <div class="detail-content">
-                                            <span class="label">退房日期</span>
-                                            <span class="value">2024年3月18日</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-users"></i>
-                                        <div class="detail-content">
-                                            <span class="label">賓客</span>
-                                            <span class="value">2位成人</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-bed"></i>
-                                        <div class="detail-content">
-                                            <span class="label">房型</span>
-                                            <span class="value">豪華客房 - 海景</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="booking-price">
-                                    <span class="price-label">總價</span>
-                                    <span class="price-amount">$2,400</span>
-                                </div>
-                            </div>
-                            
-                            <div class="card-actions">
-                                <button class="action-btn primary">
-                                    <i class="fas fa-edit"></i>
-                                    修改預訂
-                                </button>
-                                <button class="action-btn secondary">
-                                    <i class="fas fa-eye"></i>
-                                    查看詳情
-                                </button>
-                                <button class="action-btn danger">
-                                    <i class="fas fa-times"></i>
-                                    取消預訂
-                                </button>
+                            <div class="booking-status confirmed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>已確認</span>
                             </div>
                         </div>
-
-                        <div class="booking-card upcoming" data-category="upcoming">
-                            <div class="card-header">
-                                <div class="booking-info">
-                                    <h3>精選套房 - 城市景觀</h3>
-                                    <span class="booking-number">#JM2024042001</span>
-                                </div>
-                                <div class="booking-status confirmed">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>已確認</span>
-                                </div>
-                            </div>
-                            
-                            <div class="card-body">
-                                <div class="booking-details">
-                                    <div class="detail-item">
-                                        <i class="fas fa-calendar-alt"></i>
-                                        <div class="detail-content">
-                                            <span class="label">入住日期</span>
-                                            <span class="value">2024年4月20日</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-calendar-times"></i>
-                                        <div class="detail-content">
-                                            <span class="label">退房日期</span>
-                                            <span class="value">2024年4月25日</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-users"></i>
-                                        <div class="detail-content">
-                                            <span class="label">賓客</span>
-                                            <span class="value">2位成人，1位兒童</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-bed"></i>
-                                        <div class="detail-content">
-                                            <span class="label">房型</span>
-                                            <span class="value">精選套房 - 城市景觀</span>
-                                        </div>
+                        
+                        <div class="card-body">
+                            <div class="booking-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <div class="detail-content">
+                                        <span class="label">入住日期</span>
+                                        <span class="value">2024年3月15日</span>
                                     </div>
                                 </div>
-                                
-                                <div class="booking-price">
-                                    <span class="price-label">總價</span>
-                                    <span class="price-amount">$4,200</span>
-                                </div>
-                            </div>
-                            
-                            <div class="card-actions">
-                                <button class="action-btn primary">
-                                    <i class="fas fa-edit"></i>
-                                    修改預訂
-                                </button>
-                                <button class="action-btn secondary">
-                                    <i class="fas fa-eye"></i>
-                                    查看詳情
-                                </button>
-                                <button class="action-btn danger">
-                                    <i class="fas fa-times"></i>
-                                    取消預訂
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="booking-card past" data-category="past">
-                            <div class="card-header">
-                                <div class="booking-info">
-                                    <h3>私人住宅 - 三房</h3>
-                                    <span class="booking-number">#JM2024011001</span>
-                                </div>
-                                <div class="booking-status completed">
-                                    <i class="fas fa-check-double"></i>
-                                    <span>已完成</span>
-                                </div>
-                            </div>
-                            
-                            <div class="card-body">
-                                <div class="booking-details">
-                                    <div class="detail-item">
-                                        <i class="fas fa-calendar-alt"></i>
-                                        <div class="detail-content">
-                                            <span class="label">入住日期</span>
-                                            <span class="value">2024年1月10日</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-calendar-times"></i>
-                                        <div class="detail-content">
-                                            <span class="label">退房日期</span>
-                                            <span class="value">2024年1月15日</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-users"></i>
-                                        <div class="detail-content">
-                                            <span class="label">賓客</span>
-                                            <span class="value">4位成人，2位兒童</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <i class="fas fa-bed"></i>
-                                        <div class="detail-content">
-                                            <span class="label">房型</span>
-                                            <span class="value">私人住宅 - 三房</span>
-                                        </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <div class="detail-content">
+                                        <span class="label">退房日期</span>
+                                        <span class="value">2024年3月18日</span>
                                     </div>
                                 </div>
-                                
-                                <div class="booking-price">
-                                    <span class="price-label">總價</span>
-                                    <span class="price-amount">$6,800</span>
+                                <div class="detail-item">
+                                    <i class="fas fa-users"></i>
+                                    <div class="detail-content">
+                                        <span class="label">賓客</span>
+                                        <span class="value">2位成人</span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="card-actions">
-                                <button class="action-btn primary">
-                                    <i class="fas fa-star"></i>
-                                    撰寫評價
-                                </button>
-                                <button class="action-btn secondary">
-                                    <i class="fas fa-redo"></i>
-                                    再次預訂
-                                </button>
-                                <button class="action-btn info">
-                                    <i class="fas fa-receipt"></i>
-                                    查看發票
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bookings-sidebar">
-                    <div class="quick-actions">
-                        <h3>快速操作</h3>
-                        <div class="action-grid">
-                            <a href="accommodation.html" class="quick-action-btn">
-                                <div class="action-icon">
+                                <div class="detail-item">
                                     <i class="fas fa-bed"></i>
+                                    <div class="detail-content">
+                                        <span class="label">房型</span>
+                                        <span class="value">豪華客房 - 海景</span>
+                                    </div>
                                 </div>
-                                <div class="action-text">
-                                    <span class="action-title">預訂住宿</span>
-                                    <span class="action-desc">探索豪華客房</span>
-                                </div>
-                            </a>
-                            <a href="dining.html" class="quick-action-btn">
-                                <div class="action-icon">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
-                                <div class="action-text">
-                                    <span class="action-title">預訂餐廳</span>
-                                    <span class="action-desc">享受美食體驗</span>
-                                </div>
-                            </a>
-                            <a href="offers.html" class="quick-action-btn">
-                                <div class="action-icon">
-                                    <i class="fas fa-gift"></i>
-                                </div>
-                                <div class="action-text">
-                                    <span class="action-title">查看優惠</span>
-                                    <span class="action-desc">專屬會員折扣</span>
-                                </div>
-                            </a>
-                            <a href="#" class="quick-action-btn">
-                                <div class="action-icon">
-                                    <i class="fas fa-headset"></i>
-                                </div>
-                                <div class="action-text">
-                                    <span class="action-title">聯繫客服</span>
-                                    <span class="action-desc">24/7 專線服務</span>
-                                </div>
-                            </a>
+                            </div>
+                            
+                            <div class="booking-price">
+                                <span class="price-label">總價</span>
+                                <span class="price-amount">$2,400</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-edit"></i>
+                                修改預訂
+                            </button>
+                            <button class="action-btn secondary">
+                                <i class="fas fa-eye"></i>
+                                查看詳情
+                            </button>
+                            <button class="action-btn danger">
+                                <i class="fas fa-times"></i>
+                                取消預訂
+                            </button>
                         </div>
                     </div>
-                        <div class="member-benefits">
-                            <h4>專屬權益</h4>
-                            <ul>
-                                <li><i class="fas fa-check"></i> 免費升級房型</li>
-                                <li><i class="fas fa-check"></i> 延遲退房至下午2點</li>
-                                <li><i class="fas fa-check"></i> 免費機場接送</li>
-                                <li><i class="fas fa-check"></i> 專屬管家服務</li>
-                            </ul>
+
+                    <div class="booking-card upcoming" data-category="upcoming">
+                        <div class="card-header">
+                            <div class="booking-info">
+                                <h3>精選套房 - 城市景觀</h3>
+                                <span class="booking-number">#JM2024042001</span>
+                            </div>
+                            <div class="booking-status confirmed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>已確認</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="booking-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <div class="detail-content">
+                                        <span class="label">入住日期</span>
+                                        <span class="value">2024年4月20日</span>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <div class="detail-content">
+                                        <span class="label">退房日期</span>
+                                        <span class="value">2024年4月25日</span>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-users"></i>
+                                    <div class="detail-content">
+                                        <span class="label">賓客</span>
+                                        <span class="value">2位成人，1位兒童</span>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bed"></i>
+                                    <div class="detail-content">
+                                        <span class="label">房型</span>
+                                        <span class="value">精選套房 - 城市景觀</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-price">
+                                <span class="price-label">總價</span>
+                                <span class="price-amount">$4,200</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-edit"></i>
+                                修改預訂
+                            </button>
+                            <button class="action-btn secondary">
+                                <i class="fas fa-eye"></i>
+                                查看詳情
+                            </button>
+                            <button class="action-btn danger">
+                                <i class="fas fa-times"></i>
+                                取消預訂
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="booking-card past" data-category="past">
+                        <div class="card-header">
+                            <div class="booking-info">
+                                <h3>私人住宅 - 三房</h3>
+                                <span class="booking-number">#JM2024011001</span>
+                            </div>
+                            <div class="booking-status completed">
+                                <i class="fas fa-check-double"></i>
+                                <span>已完成</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="booking-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <div class="detail-content">
+                                        <span class="label">入住日期</span>
+                                        <span class="value">2024年1月10日</span>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <div class="detail-content">
+                                        <span class="label">退房日期</span>
+                                        <span class="value">2024年1月15日</span>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-users"></i>
+                                    <div class="detail-content">
+                                        <span class="label">賓客</span>
+                                        <span class="value">4位成人，2位兒童</span>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bed"></i>
+                                    <div class="detail-content">
+                                        <span class="label">房型</span>
+                                        <span class="value">私人住宅 - 三房</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-price">
+                                <span class="price-label">總價</span>
+                                <span class="price-amount">$6,800</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-star"></i>
+                                撰寫評價
+                            </button>
+                            <button class="action-btn secondary">
+                                <i class="fas fa-redo"></i>
+                                再次預訂
+                            </button>
+                            <button class="action-btn info">
+                                <i class="fas fa-receipt"></i>
+                                查看發票
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+
+            <div class="bookings-sidebar">
+                <div class="quick-actions">
+                    <h3>快速操作</h3>
+                    <div class="action-grid">
+                        <a href="accommodation.html" class="quick-action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">預訂住宿</span>
+                                <span class="action-desc">探索豪華客房</span>
+                            </div>
+                        </a>
+                        <a href="dining.html" class="quick-action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">預訂餐廳</span>
+                                <span class="action-desc">享受美食體驗</span>
+                            </div>
+                        </a>
+                        <a href="offers.html" class="quick-action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">查看優惠</span>
+                                <span class="action-desc">專屬會員折扣</span>
+                            </div>
+                        </a>
+                        <a href="#" class="quick-action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">聯繫客服</span>
+                                <span class="action-desc">24/7 專線服務</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    <div class="member-benefits">
+                        <h4>專屬權益</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 免費升級房型</li>
+                            <li><i class="fas fa-check"></i> 延遲退房至下午2點</li>
+                            <li><i class="fas fa-check"></i> 免費機場接送</li>
+                            <li><i class="fas fa-check"></i> 專屬管家服務</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
