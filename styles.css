@@ -49,7 +49,7 @@ body:not(.homepage) {
 
 @media (max-width: 768px) {
     body:not(.homepage) {
-        background-image: url('bg.webp');
+        background-image: url('bg.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -57,7 +57,7 @@ body:not(.homepage) {
         
     }
     body.homepage {
-      background: url('bg.webp') no-repeat center center fixed;
+      background: url('bg.jpg') no-repeat center center fixed;
       background-size: cover;
       
   }
