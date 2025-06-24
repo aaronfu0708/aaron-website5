@@ -1326,12 +1326,15 @@ header {
 .site-footer {
   position: relative;
   z-index: 10;
-  background: #f8f4f0;
+  background: rgba(248, 244, 240, 0.55); /* 半透明 */
+  backdrop-filter: blur(13px); /* 模糊 */
   color: #222;
-  padding: 64px 0 32px 0;
+  padding: 24px 0 8px 0 !important; /* 底部更近 */
   font-family: 'Montserrat', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-  font-size: 1.08rem;
+  font-size: 0.95rem; /* 字體更小 */
   letter-spacing: 0.12em;
+  border-radius: 0; /* 移除圓角 */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
 }
 .footer-main {
   display: flex;
@@ -1339,22 +1342,23 @@ header {
   align-items: flex-start;
   max-width: 1200px;
   margin: 0 auto 0 auto;
-  padding: 0 4vw;
+  padding: 0 3vw; /* 左右間距更小 */
 }
 .footer-links {
-  display: flex;
-  gap: 120px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px; /* 欄間距更小 */
 }
 .footer-col {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px; /* 連結間距更小 */
 }
 .footer-col a {
   color: #222;
   text-decoration: none;
   font-weight: 500;
-  font-size: 1.08rem;
+  font-size: 0.95rem; /* 連結字體更小 */
   letter-spacing: 0.18em;
   text-transform: uppercase;
   margin-bottom: 0;
@@ -1371,9 +1375,9 @@ header {
 }
 .footer-title {
   font-family: 'Times New Roman', Times, serif;
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* 標題更小 */
   font-weight: 400;
-  margin-bottom: 18px;
+  margin-bottom: 12px; /* 間距更小 */
   letter-spacing: 0.04em;
   text-align: right;
 }
@@ -1381,14 +1385,14 @@ header {
   background: #222;
   color: #fff;
   border: none;
-  border-radius: 4px;
-  padding: 13px 44px;
-  font-size: 1.08rem;
+  border-radius: 8px; /* 按鈕保持圓角 */
+  padding: 10px 32px; /* 按鈕更小 */
+  font-size: 0.95rem; /* 按鈕字體更小 */
   font-family: inherit;
   letter-spacing: 0.18em;
   font-weight: 600;
   cursor: pointer;
-  margin-bottom: 32px;
+  margin-bottom: 24px; /* 間距更小 */
   margin-top: 0;
   text-transform: uppercase;
   transition: background 0.2s;
@@ -1399,11 +1403,11 @@ header {
 }
 .footer-social {
   display: flex;
-  gap: 36px;
-  margin-top: 0;
+  gap: 24px; /* 社群間距更小 */
+  margin-top: 12px;
 }
 .footer-social a {
-  font-size: 2.1rem;
+  font-size: 1.8rem; /* 社群圖示更小 */
   color: #222;
   transition: color 0.2s;
 }
@@ -1412,9 +1416,9 @@ header {
 }
 .footer-copyright {
   text-align: center;
-  color: #888;
-  font-size: 1.08rem;
-  margin-top: 56px;
+  color: #222222;
+  font-size: 0.9rem; /* 字體更小 */
+  margin-top: 36px; /* 間距更小 */
   letter-spacing: 0.18em;
 }
 @media (max-width: 1100px) {
@@ -1431,6 +1435,10 @@ header {
   .footer-title {
     text-align: left;
   }
+  .footer-links {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
 }
 @media (max-width: 700px) {
   .footer-main {
@@ -1439,8 +1447,8 @@ header {
     padding: 0 2vw;
   }
   .footer-links {
-    flex-direction: column;
-    gap: 24px;
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
   .footer-col {
     gap: 14px;
@@ -1465,6 +1473,13 @@ header {
   .footer-copyright {
     margin-top: 32px;
     font-size: 0.95rem;
+  }
+}
+
+/* 手機footer隱藏 */
+@media (max-width: 900px) {
+  .site-footer {
+    display: none !important;
   }
 }
 
