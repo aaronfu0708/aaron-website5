@@ -1104,6 +1104,7 @@ header {
     padding-right: 16px;
     border-radius: 28px;
     box-sizing: border-box;
+    z-index: 200 !important; /* 提高z-index确保在导航网格之上 */
   }
   .booking-search-bar {
     width: 90vw !important;
