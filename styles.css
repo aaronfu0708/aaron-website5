@@ -16,10 +16,10 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     background-image: url('bg.webp');
-    background-size: 200% 200%;
+    background-size: 200vw 200vh;
     background-position: center 0;
     background-repeat: no-repeat;
     z-index: -1;

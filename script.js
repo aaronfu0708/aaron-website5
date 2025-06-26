@@ -453,7 +453,7 @@ function initCarousel() {
     // 4. 重新設置 currentIndex
     currentIndex = 0;
     updateCarouselPosition(currentIndex);
-    
+
     // 5. 重新綁定事件
     bindCarouselEvents();
     console.log('轮播图初始化完成');
@@ -513,7 +513,7 @@ function updateMasonryParallax() {
 window.addEventListener('scroll', updateMasonryParallax);
 window.addEventListener('resize', updateMasonryParallax);
 
-// 首页视差滚动效果（类似Adaline.ai）
+// 首页视差滚动效果
 function initHomepageParallax() {
     const parallaxBg = document.getElementById('homepage-parallax-bg');
     const body = document.body;
@@ -546,15 +546,13 @@ function initHomepageParallax() {
         const scale = 1.2 + (scrollProgress * 0.2); // 从1.2倍放大到1.4倍
         
         // 背景位置移动：创造由近到远的效果（向上移动）
-        const moveY = -(scrolled * 0.2); // 减少移动速度，避免露出边界
+        const moveY = -(scrolled * 0.1); // 减少移动速度，避免露出边界
         
         // 应用变换
         parallaxBg.style.backgroundSize = `${scale * 100}% ${scale * 100}%`;
         parallaxBg.style.backgroundPosition = `center ${moveY}px`;
         
-        // 添加轻微的旋转效果增强深度感
-        const rotation = scrollProgress * 0.5; // 进一步减少旋转角度
-        parallaxBg.style.transform = `translateZ(0) rotate(${rotation}deg)`;
+
         
         ticking = false;
     }
