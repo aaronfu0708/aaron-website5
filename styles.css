@@ -1225,6 +1225,8 @@ header {
 
 /* ===== 兩欄大圖視差 Masonry 區塊（無進場動畫） ===== */
 .masonry-gallery {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
