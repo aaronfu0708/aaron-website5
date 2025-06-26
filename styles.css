@@ -1558,3 +1558,43 @@ header {
     background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
 }
 
+.datepicker {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 16px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  text-align: left;
+  direction: ltr;
+  box-sizing: border-box;
+}
+.datepicker:focus {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.4);
+  outline: none;
+}
+
+@media (min-width: 901px) {
+  .datepicker {
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 8px 0;
+    height: auto;
+    text-align: center;
+  }
+  .datepicker:focus {
+    background: none;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    text-align: center;
+  }
+}
+

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="flatpickr.min.css">
     <style>
         body{overflow-x: hidden;}
     </style>
@@ -181,8 +182,8 @@
                 <option value="9">9位小孩</option>
                 <option value="10">10位小孩</option>
               </select>
-              <input type="date" id="checkin-date" name="checkin-date" min="" placeholder="入住日期">
-              <input type="date" id="checkout-date" name="checkout-date" min="" placeholder="退房日期">
+              <input type="text" id="checkin-date" name="checkin-date" class="datepicker" placeholder="入住日期">
+              <input type="text" id="checkout-date" name="checkout-date" class="datepicker" placeholder="退房日期">
               <button class="booking-search-btn">預定</button>
             </div>
             <!-- 訂房搜尋/篩選區塊 end -->
@@ -289,5 +290,21 @@
     <!-- Footer 區塊 end -->
 
     <script src="script.js"></script>
+    <script src="flatpickr.min.js"></script>
+    <script>
+      flatpickr('.datepicker', {
+        minDate: 'today',
+        dateFormat: 'Y-m-d',
+        locale: 'zh_tw',
+        allowInput: true,
+        onChange: function(selectedDates, dateStr, instance) {
+          // 若是入住日期，則自動設置退房最小值
+          if(instance.element.id === 'checkin-date') {
+            const checkout = document.getElementById('checkout-date');
+            if(checkout) checkout._flatpickr.set('minDate', dateStr);
+          }
+        }
+      });
+    </script>
 </body>
 </html> 
