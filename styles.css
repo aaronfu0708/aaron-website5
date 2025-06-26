@@ -1228,7 +1228,7 @@ header {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.3fr 1fr;
   gap: 60px;
   max-width: 70vw;
   margin: -150px auto 80px auto;
