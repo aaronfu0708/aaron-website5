@@ -542,8 +542,8 @@ function initHomepageParallax() {
         // 计算滚动进度（0-1）
         const scrollProgress = Math.min(scrolled / (documentHeight - windowHeight), 1);
         
-        // 背景图缩放效果：从120%逐渐放大到140%（确保始终覆盖视窗）
-        const scale = 1.2 + (scrollProgress * 0.2); // 从1.2倍放大到1.4倍
+        // 背景图缩放效果
+        const scale = 1.2 + (scrollProgress * 0.0); 
         
         // 背景位置移动：创造由近到远的效果（向上移动）
         const moveY = -(scrolled * 0.1); // 减少移动速度，避免露出边界
