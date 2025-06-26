@@ -1081,7 +1081,7 @@ header {
 .booking-search-floating {
   position: absolute;
   left: 42.5vw;
-  top: 60px;
+  top: 7vh;
   width: calc(100% - 14vw);
   max-width: 850px;
   transform: none;
@@ -1089,17 +1089,10 @@ header {
   padding: 40px 0;
 }
 
-/* 1080 分辨率特殊处理 */
-@media screen and (min-height: 1080px) {
+/* 1080高度 */
+@media screen and (max-height: 1080px) {
   .booking-search-floating {
-    top: 100px !important;
-  }
-}
-
-/* 1920x1080 分辨率特殊处理 */
-@media screen and (min-height: 1000px) {
-  .booking-search-floating {
-    top: 100px !important;
+    top: 12vh !important;
   }
 }
 
