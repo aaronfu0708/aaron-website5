@@ -58,7 +58,7 @@ body:not(.homepage) {
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('bg.jpg');
+        background-image: url('mbg.webp');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -76,7 +76,7 @@ body:not(.homepage) {
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('bg.jpg');
+        background-image: url('mbg.webp');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
