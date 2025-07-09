@@ -1323,7 +1323,7 @@ header {
 .booking-search-floating {
   position: absolute;
   left: 42.5vw;
-  top: 7vh;
+  top: 8vh;
   width: calc(100% - 14vw);
   max-width: 850px;
   transform: none;
@@ -1332,7 +1332,7 @@ header {
 }
 
 /* 1080高度 */
-@media screen and (min-height: 1000px) {
+@media screen and (min-width: 1500px) {
   .booking-search-floating {
     top: 12vh ;
   }
